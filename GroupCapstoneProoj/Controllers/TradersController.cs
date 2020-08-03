@@ -65,7 +65,7 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,PickupDay,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
+        public IActionResult Create([Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             trader.IdentityUserId = userId;
@@ -89,7 +89,7 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,PickupDay,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
+        public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var traderToUpdate = _context.Traders.Where(c => c.IdentityUserId == userId).SingleOrDefault();

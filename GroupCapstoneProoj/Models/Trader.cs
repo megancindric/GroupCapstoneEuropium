@@ -30,11 +30,6 @@ namespace GroupCapstoneProoj.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [Display(Name = "Regular Pickup Day")]
-
-        public string PickupDay { get; set; }
-
-        [Required]
         [Display(Name = "Street Name")]
         public string StreetName { get; set; }
 
@@ -48,7 +43,6 @@ namespace GroupCapstoneProoj.Models
         [Display(Name = "Zip Code")]
 
         public string ZipCode { get; set; }
-
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,17 +18,21 @@ namespace GroupCapstoneProoj.Models
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your first name")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your last name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required, MaxLength(5)]
+        [Required(ErrorMessage = "Please enter your zip code"), MaxLength(5)]
         [Display(Name = "Zip Code")]
 
         public string ZipCode { get; set; }
+
+        [Required(ErrorMessage = "Please select your profile image")]
+        [Display(Name = "Profile Picture")]
+        public IFormFile ProfileImage { get; set; }
     }
 }

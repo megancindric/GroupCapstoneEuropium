@@ -17,18 +17,18 @@ namespace GroupCapstoneProoj.Models
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A listing name is required")]
         public string ListingName { get; set; }
 
         public List<string> ListingPictures { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A category is required")]
         public string Category { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter something you'd like in return")]
         public string InReturn { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A price value is required")]
         public double Price { get; set; }
 
     }

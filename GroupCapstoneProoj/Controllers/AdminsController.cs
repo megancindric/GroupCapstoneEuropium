@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GroupCapstoneProoj.Data;
 using GroupCapstoneProoj.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace GroupCapstoneProoj.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class AdminsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,29 +24,35 @@ namespace GroupCapstoneProoj.Controllers
         }
 
         // GET: Admins
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Admins.Include(a => a.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Admins/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var admin = await _context.Admins
-                .Include(a => a.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
             if (admin == null)
             {
                 return NotFound();
             }
+            else
+            {
+                return View(admin);
 
-            return View(admin);
+            }
+        }
+
+        // GET: Admins/Details/5
+        public IActionResult Details(int? id)
+        {
+            var admin = _context.Admins
+      .Include(c => c.IdentityUser)
+      .FirstOrDefaultAsync(m => m.Id == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(admin);
+            }
         }
 
         // GET: Admins/Create
@@ -57,12 +67,14 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdentityUserId,FirstName,LastName,ZipCode")] Admin admin)
+        public IActionResult Create([Bind("Id,IdentityUserId,FirstName,LastName,ZipCode")] Admin admin)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                admin.IdentityUserId = userId;
                 _context.Add(admin);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
@@ -155,6 +167,24 @@ namespace GroupCapstoneProoj.Controllers
         private bool AdminExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> DeleteTrader(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var trader = await _context.Traders
+                .Include(e => e.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (trader == null)
+            {
+                return NotFound();
+            }
+
+            return View(trader);
         }
     }
 }

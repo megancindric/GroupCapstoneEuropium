@@ -31,8 +31,5 @@ namespace GroupCapstoneProoj.Models
 
         public string ZipCode { get; set; }
 
-        [Required(ErrorMessage = "Please select your profile image")]
-        [Display(Name = "Profile Picture")]
-        public IFormFile ProfileImage { get; set; }
     }
 }

@@ -4,16 +4,14 @@ using GroupCapstoneProoj.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GroupCapstoneProoj.Data.Migrations
+namespace GroupCapstoneProoj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200804154136_amendstolistingclass")]
-    partial class amendstolistingclass
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,16 +60,15 @@ namespace GroupCapstoneProoj.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InReturn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
@@ -85,14 +82,6 @@ namespace GroupCapstoneProoj.Data.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
@@ -187,15 +176,15 @@ namespace GroupCapstoneProoj.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4ccf173a-88d5-4b1d-9204-419511cc6f69",
-                            ConcurrencyStamp = "f91ae186-d2b1-48a9-a790-970971ed4640",
+                            Id = "2a8b92e1-9a2a-48b0-b585-9ce5e45e7fba",
+                            ConcurrencyStamp = "dfb38f28-ece2-4d5d-ae7f-d4b67d528714",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f38962ca-43fe-4eaa-9436-f04e7b7ea348",
-                            ConcurrencyStamp = "af37404b-25bf-4426-bd4b-296ec647413a",
+                            Id = "8d01df49-7512-47d7-ad77-f4092730fc7b",
+                            ConcurrencyStamp = "38f20acb-fe28-4ef4-983c-9b2c3a66a81e",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

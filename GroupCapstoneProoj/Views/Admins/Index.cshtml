@@ -1,46 +1,55 @@
-﻿@model GroupCapstoneProoj.Models.Admin
+﻿@model GroupCapstoneProoj.Models.AdminIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+    <h1>Hello @Model.FirstName @Model.LastName</h1>
+    <h3>Active Lists</h3>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Listings[0].ListingName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Listings[0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
+                @Html.DisplayNameFor(model => model.Listings[0].InReturn)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Listings[0].Price)
+            </th>
+           
             <th></th>
         </tr>
     </thead>
     <tbody>
+        @foreach (var item in Model.Listings)
+        {
+
         <tr>
             <td>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => item.ListingName)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => item.Category)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.ZipCode)
+                @Html.DisplayNameFor(model => item.InReturn)
             </td>
             <td>
+                @Html.DisplayNameFor(model => item.Price)
+            </td>
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
+        }
     </tbody>
 </table>

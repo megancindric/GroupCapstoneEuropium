@@ -28,14 +28,19 @@ namespace GroupCapstoneProoj.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+          
             if (admin == null)
             {
                 return NotFound();
             }
             else
             {
-                return View(admin);
-
+                AdminIndexViewModel indexView = new AdminIndexViewModel();
+                indexView.FirstName = admin.FirstName;
+                indexView.LastName = admin.LastName;
+                indexView.Listings = _context.Listings.ToList();
+                indexView.Traders = _context.Traders.ToList();
+                return View(indexView);
             }
         }
 

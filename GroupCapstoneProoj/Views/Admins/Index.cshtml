@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <h1>Hello @Model.FirstName @Model.LastName</h1>
-    <h3>Active Lists</h3>
+<h1>Hello @Model.FirstName @Model.LastName</h1>
+<h3>Active Lists</h3>
 
 <table class="table">
     <thead>
@@ -23,33 +23,30 @@
             <th>
                 @Html.DisplayNameFor(model => model.Listings[0].Price)
             </th>
-           
+
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Listings)
         {
-
-        <tr>
-            <td>
-                @Html.DisplayNameFor(model => item.ListingName)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => item.Category)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => item.InReturn)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => item.Price)
-            </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-            </td>*@
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.ListingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.InReturn)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Price)
+                </td>
+                <td>
+                    <a asp-action="AdminListingDetails" asp-route-id="@item.Id">Details</a> |
+                </td>
+            </tr>
         }
     </tbody>
 </table>

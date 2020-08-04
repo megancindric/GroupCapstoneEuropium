@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GroupCapstoneProoj.Data;
-using GroupCapstoneProoj.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-
-namespace GroupCapstoneProoj.Controllers
+﻿namespace GroupCapstoneProoj.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using GroupCapstoneProoj.Data;
+    using GroupCapstoneProoj.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.EntityFrameworkCore;
+
     [Authorize(Roles = "Admin")]
 
     public class AdminsController : Controller
@@ -28,7 +28,7 @@ namespace GroupCapstoneProoj.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-          
+
             if (admin == null)
             {
                 return NotFound();
@@ -45,11 +45,11 @@ namespace GroupCapstoneProoj.Controllers
         }
 
         // GET: Admins/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult AdminDetails(int? id)
         {
-            var admin = _context.Admins
-      .Include(c => c.IdentityUser)
-      .FirstOrDefaultAsync(m => m.Id == id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+
             if (admin == null)
             {
                 return NotFound();
@@ -59,6 +59,24 @@ namespace GroupCapstoneProoj.Controllers
                 return View(admin);
             }
         }
+
+        public IActionResult AdminListingDetails(int? id)
+        {
+            var foundListing = _context.Listings.Where(l => l.Id == id).FirstOrDefault();
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(foundListing);
+            }
+        }
+
+
+
+
 
         // GET: Admins/Create
         public IActionResult Create()

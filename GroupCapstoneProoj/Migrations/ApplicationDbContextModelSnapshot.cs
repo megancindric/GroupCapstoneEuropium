@@ -4,16 +4,14 @@ using GroupCapstoneProoj.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GroupCapstoneProoj.Data.Migrations
+namespace GroupCapstoneProoj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200803134056_AddedListingModel")]
-    partial class AddedListingModel
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +49,52 @@ namespace GroupCapstoneProoj.Data.Migrations
                     b.ToTable("Admins");
                 });
 
+            modelBuilder.Entity("GroupCapstoneProoj.Models.Listing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("InReturn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ListingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(5)")
+                        .HasMaxLength(5);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("Listings");
+                });
+
             modelBuilder.Entity("GroupCapstoneProoj.Models.Trader", b =>
                 {
                     b.Property<int>("Id")
@@ -81,8 +125,7 @@ namespace GroupCapstoneProoj.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -133,15 +176,25 @@ namespace GroupCapstoneProoj.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "08a191b0-0220-41d2-8a54-6d9c240bfc86",
-                            ConcurrencyStamp = "43e05f82-0051-44f9-b594-4c282c8bcfb7",
+<<<<<<< HEAD:GroupCapstoneProoj/Data/Migrations/ApplicationDbContextModelSnapshot.cs
+                            Id = "55d3a7aa-76b2-4e90-9ea3-4b9c34cec6a0",
+                            ConcurrencyStamp = "59d3deb2-429f-44a6-bc9b-38707f2ae8a8",
+=======
+                            Id = "2a8b92e1-9a2a-48b0-b585-9ce5e45e7fba",
+                            ConcurrencyStamp = "dfb38f28-ece2-4d5d-ae7f-d4b67d528714",
+>>>>>>> 1ed29b12fac1f548901c1f76336e71e6c3df5339:GroupCapstoneProoj/Migrations/ApplicationDbContextModelSnapshot.cs
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "4bde32ba-fd29-42ca-a9e1-aa8bac62dfcd",
-                            ConcurrencyStamp = "b3025057-e247-479e-93e5-98d4b5f714ec",
+<<<<<<< HEAD:GroupCapstoneProoj/Data/Migrations/ApplicationDbContextModelSnapshot.cs
+                            Id = "42f0461d-a154-4d7d-961b-150385cb3d02",
+                            ConcurrencyStamp = "123c71e1-7fed-406c-a9a7-748ab55e10c9",
+=======
+                            Id = "8d01df49-7512-47d7-ad77-f4092730fc7b",
+                            ConcurrencyStamp = "38f20acb-fe28-4ef4-983c-9b2c3a66a81e",
+>>>>>>> 1ed29b12fac1f548901c1f76336e71e6c3df5339:GroupCapstoneProoj/Migrations/ApplicationDbContextModelSnapshot.cs
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });
@@ -317,6 +370,13 @@ namespace GroupCapstoneProoj.Data.Migrations
                 });
 
             modelBuilder.Entity("GroupCapstoneProoj.Models.Admin", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("GroupCapstoneProoj.Models.Listing", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()

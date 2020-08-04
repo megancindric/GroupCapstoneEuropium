@@ -5,13 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Hello, Trader @Html.DisplayFor(model => model.FirstName)!</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h3>Welcome to your Dashboard</h3>
+
+<h3 class="display-3">My Curret Listings</h3>
+<div class="jumbotron">
+
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+        <div class="card-header">Placeholder Listing</div>
+        <div class="card-body">
+            <h4 class="card-title">This is where the image and name of a listing will go</h4>
+            <p class="card-text">We will need to create a list of listings to pull from.</p>
+            <span class="badge badge-danger">Delete Listing</span>
+        </div>
+    </div>
+
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+        <div class="card-header">Placeholder Listing</div>
+        <div class="card-body">
+            <h4 class="card-title">This is where the image and name of a listing will go</h4>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+    </div>
+
+</div>
 <table class="table">
     <thead>
+        `
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
@@ -41,6 +62,30 @@
         <tr>
             <td>
                 @Html.DisplayFor(model => model.FirstName)
+<<<<<<< HEAD
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StreetName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.City)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.State)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ZipCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit my Profile</a> |
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete my Profile</a>
+=======
             </td>
             <td>
                 @Html.DisplayFor(model => model.LastName)
@@ -64,6 +109,7 @@
                 <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+>>>>>>> 55d86bb03a8c49e0b3984e60bea439bd9634c9be
             </td>
         </tr>
     </tbody>

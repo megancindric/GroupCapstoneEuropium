@@ -186,6 +186,11 @@ namespace GroupCapstoneProoj.Controllers
             return _context.Traders.Any(e => e.Id == id);
         }
 
+        private bool ListingExists(int id)
+        {
+            return _context.Listings.Any(e => e.Id == id);
+        }
+
         public IActionResult CreateListing()
         {
             return View();
@@ -203,6 +208,94 @@ namespace GroupCapstoneProoj.Controllers
             _context.Add(listing);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult EditListing(int id)
+        {
+            //When we create button for this, pass in ID of current listing as param
+            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            return View(listing);
+        }
+
+        // POST: Listing/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditListing(int id, [Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var listingToUpdate = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            try
+            {
+                listingToUpdate.ListingName = listing.ListingName;
+                listingToUpdate.Category = listing.Category;
+                listingToUpdate.Price = listing.Price;
+                listingToUpdate.InReturn = listing.InReturn;
+                listingToUpdate.StreetName = listing.StreetName;
+                listingToUpdate.City = listing.City;
+                listingToUpdate.State = listing.State;
+                listingToUpdate.ZipCode = listing.ZipCode;
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ListingExists(listing.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        // GET: Traders/Delete/5
+        public IActionResult DeleteListing(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var listing = _context.Listings
+                .Include(c => c.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (listing == null)
+            {
+                return NotFound();
+            }
+
+            return View(listing);
+        }
+
+        // POST: Traders/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteListingConfirmed(int id)
+        {
+            var listing = _context.Listings.FirstOrDefault(m => m.Id == id);
+            _context.Listings.Remove(listing);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult ListingDetails(int? id)
+        {
+
+            var listing = _context.Traders
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (listing == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(listing);
+            }
+
         }
 
     }

@@ -1,7 +1,8 @@
 ﻿@model GroupCapstoneProoj.Models.Listing
 
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var selectListCategory = new SelectList(new List<SelectListItem>
         {
@@ -9,11 +10,14 @@
             new SelectListItem {Text = "Services", Value = "Services"},
          }, "Value", "Text");
 }
-<h4>Listing</h4>
+
+<h4>Edit Listing</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateListing">
+        <form asp-action="EditListing">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="ListingName" class="control-label"></label>
                 <input asp-for="ListingName" class="form-control" />
@@ -55,7 +59,7 @@
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

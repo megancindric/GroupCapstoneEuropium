@@ -267,9 +267,7 @@ namespace GroupCapstoneProoj.Controllers
                 return NotFound();
             }
 
-            var listing = _context.Listings
-                .Include(c => c.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var listing = _context.Listings.FirstOrDefault(m => m.Id == id);
             if (listing == null)
             {
                 return NotFound();
@@ -292,8 +290,7 @@ namespace GroupCapstoneProoj.Controllers
         public IActionResult ListingDetails(int? id)
         {
 
-            var listing = _context.Traders
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var listing = _context.Listings.FirstOrDefault(m => m.Id == id);
             if (listing == null)
             {
                 return NotFound();

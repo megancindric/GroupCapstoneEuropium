@@ -176,25 +176,16 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< HEAD:GroupCapstoneProoj/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                             Id = "55d3a7aa-76b2-4e90-9ea3-4b9c34cec6a0",
                             ConcurrencyStamp = "59d3deb2-429f-44a6-bc9b-38707f2ae8a8",
-=======
-                            Id = "2a8b92e1-9a2a-48b0-b585-9ce5e45e7fba",
-                            ConcurrencyStamp = "dfb38f28-ece2-4d5d-ae7f-d4b67d528714",
->>>>>>> 1ed29b12fac1f548901c1f76336e71e6c3df5339:GroupCapstoneProoj/Migrations/ApplicationDbContextModelSnapshot.cs
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-<<<<<<< HEAD:GroupCapstoneProoj/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                             Id = "42f0461d-a154-4d7d-961b-150385cb3d02",
                             ConcurrencyStamp = "123c71e1-7fed-406c-a9a7-748ab55e10c9",
-=======
-                            Id = "8d01df49-7512-47d7-ad77-f4092730fc7b",
-                            ConcurrencyStamp = "38f20acb-fe28-4ef4-983c-9b2c3a66a81e",
->>>>>>> 1ed29b12fac1f548901c1f76336e71e6c3df5339:GroupCapstoneProoj/Migrations/ApplicationDbContextModelSnapshot.cs
+
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

@@ -33,6 +33,9 @@ namespace GroupCapstoneProoj.Data
         public DbSet<Models.Trader> Traders { get; set; }
 
         public DbSet<Models.Admin> Admins { get; set; }
+        public DbSet<Models.Listing> Listings { get; set; }
+
     }
+
 }
 

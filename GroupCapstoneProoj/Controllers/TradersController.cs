@@ -36,6 +36,61 @@ namespace GroupCapstoneProoj.Controllers
             }
         }
 
+        // GET: Employees
+        public ActionResult Browse()
+        {
+            TraderIndexViewModel viewModel = new TraderIndexViewModel();
+            viewModel.SelectedCategory = "All";
+
+            viewModel.Listings = new List<Listing>();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
+            var localListing = _context.Listings.Where(s => s.ZipCode == currentEmployee.ZipCode && s.PickupDay == viewModel.SelectedDay && s.LastPickupDate != DateTime.Now).ToList();
+            var extraPickupCustomers = _context.Customers.Where(s => s.ExtraPickupDate != default && s.LastPickupDate != DateTime.Now).ToList();
+            foreach (Customer customer in regularCustomers)
+            {
+                if (!IsSuspended(customer))
+                {
+                    viewModel.Customers.Add(customer);
+                }
+            }
+
+            foreach (Customer customer in extraPickupCustomers)
+            {
+                if (customer.ZipCode == currentEmployee.ZipCode && customer.ExtraPickupDate.DayOfWeek.ToString() == viewModel.SelectedDay && !IsSuspended(customer))
+                {
+                    viewModel.Customers.Add(customer);
+                }
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Browse(TraderIndexViewModel viewModel)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
+            viewModel.Listings = new List<Listing>();
+            var regularCustomers = _context.Customers.Where(s => s.ZipCode == currentEmployee.ZipCode && s.PickupDay == viewModel.SelectedDay && s.LastPickupDate != DateTime.Now).ToList();
+            var extraPickupCustomers = _context.Customers.Where(s => s.ExtraPickupDate != default && s.LastPickupDate != DateTime.Now).ToList();
+            foreach (Customer customer in regularCustomers)
+            {
+                if (!IsSuspended(customer))
+                {
+                    viewModel.Customers.Add(customer);
+                }
+            }
+
+            foreach (Customer customer in extraPickupCustomers)
+            {
+                if (customer.ZipCode == currentEmployee.ZipCode && customer.ExtraPickupDate.DayOfWeek.ToString() == viewModel.SelectedDay && !IsSuspended(customer))
+                {
+                    viewModel.Customers.Add(customer);
+                }
+            }
+            return View(viewModel);
+        }
+
         // GET: Traders/Details/5
         public IActionResult Details(int? id)
         {

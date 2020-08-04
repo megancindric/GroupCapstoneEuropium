@@ -18,15 +18,23 @@ namespace GroupCapstoneProoj.Models
         public IdentityUser IdentityUser { get; set; }
 
         [Required(ErrorMessage = "A listing name is required")]
+        [Display(Name = "Listing Name")]
+
         public string ListingName { get; set; }
 
         [Required(ErrorMessage = "A category is required")]
+        [Display(Name = "Category")]
+
         public string Category { get; set; }
 
         [Required(ErrorMessage = "Please enter something you'd like in return")]
+        [Display(Name = "Wanted in Return")]
+
         public string InReturn { get; set; }
 
         [Required(ErrorMessage = "A price value is required")]
+        [Display(Name = "Price")]
+
         public double Price { get; set; }
 
         [Required(ErrorMessage = "Please enter your zip code"), MaxLength(5)]
@@ -36,6 +44,8 @@ namespace GroupCapstoneProoj.Models
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        [Display(Name = "Is Archived")]
+
         public bool IsArchived { get; set; }
 
     }

@@ -8,9 +8,8 @@ namespace GroupCapstoneProoj.Models
 {
     public class TraderIndexViewModel
     {
-        public List<Listing> Listings { get; set; }
+        public List<Listing> MyListings { get; set; }
 
-        public SelectList CategoryList = new SelectList(new List<string>() { "Goods", "Services", "All" });
-        public string SelectedCategory { get; set; }
+        public Trader Trader { get; set; }
     }
 }

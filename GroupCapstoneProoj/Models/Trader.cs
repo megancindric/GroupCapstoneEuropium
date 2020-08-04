@@ -35,9 +35,13 @@ namespace GroupCapstoneProoj.Models
         public string StreetName { get; set; }
 
         [Required(ErrorMessage = "Please enter your city")]
+        [Display(Name = "City")]
+
         public string City { get; set; }
 
         [Required]
+        [Display(Name = "State")]
+
         public string State { get; set; }
 
         [Required(ErrorMessage = "Please enter your zip code"), MaxLength(5)]

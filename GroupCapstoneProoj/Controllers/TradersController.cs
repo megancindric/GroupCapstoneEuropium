@@ -21,25 +21,35 @@ namespace GroupCapstoneProoj.Controllers
         }
 
         // GET: Traders
-        public IActionResult Index()
+        public ActionResult Index()
+        {
+            TraderIndexViewModel viewModel = new TraderIndexViewModel();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            viewModel.MyListings = new List<Listing>();
+            viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
+            viewModel.MyListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(TraderIndexViewModel viewModel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var trader = _context.Traders.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-            if (trader == null)
+            viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
+            var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
+            foreach (Listing listing in myListings)
             {
-                return NotFound();
+                viewModel.MyListings.Add(listing);
             }
-            else
-            {
-                return View(trader);
-
-            }
+            return View(viewModel);
         }
 
         // GET: Employees
         public ActionResult Browse()
         {
-            TraderIndexViewModel viewModel = new TraderIndexViewModel();
+            TraderBrowseViewModel viewModel = new TraderBrowseViewModel();
             viewModel.SelectedCategory = "All";
 
             viewModel.Listings = new List<Listing>();
@@ -55,7 +65,7 @@ namespace GroupCapstoneProoj.Controllers
         }
 
         [HttpPost]
-        public ActionResult Browse(TraderIndexViewModel viewModel)
+        public ActionResult Browse(TraderBrowseViewModel viewModel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();

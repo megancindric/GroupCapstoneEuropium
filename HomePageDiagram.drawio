@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-08-03T17:03:23.853Z" agent="5.0 (Windows)" etag="-Tgj-V3Rdq9DQ4IcjHLQ" version="13.5.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-04T18:45:43.672Z" agent="5.0 (Windows)" etag="PBCmU77pmdqmPiOWPU9J" version="13.5.8" type="github">
   <diagram id="883TAdTjEnozO-CosXGU" name="Page-1">
     <mxGraphModel dx="1422" dy="1937" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -143,31 +143,13 @@
           <mxGeometry x="59" y="1185" width="183.5" height="35" as="geometry" />
         </mxCell>
         <mxCell id="oTMobL77kvP01hf4ct_w-86" value="Listing 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="69" y="1245" width="156" height="80" as="geometry" />
+          <mxGeometry x="69" y="1245" width="451" height="80" as="geometry" />
         </mxCell>
         <mxCell id="oTMobL77kvP01hf4ct_w-87" value="Listing 2" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="70" y="1335" width="156" height="80" as="geometry" />
+          <mxGeometry x="70" y="1335" width="450" height="80" as="geometry" />
         </mxCell>
         <mxCell id="oTMobL77kvP01hf4ct_w-88" value="Listing 3" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="69" y="1425" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-90" value="Listing 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="605" y="1245" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-91" value="Listing 2" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="606" y="1335" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-92" value="Listing 3" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="605" y="1425" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-93" value="Listing 1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="350" y="1245" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-94" value="Listing 2" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="351" y="1335" width="156" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="oTMobL77kvP01hf4ct_w-95" value="Listing 3" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="350" y="1425" width="156" height="80" as="geometry" />
+          <mxGeometry x="69" y="1425" width="451" height="80" as="geometry" />
         </mxCell>
         <mxCell id="oTMobL77kvP01hf4ct_w-96" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="20" y="1630" width="790" height="510" as="geometry" />
@@ -225,6 +207,24 @@
         </mxCell>
         <mxCell id="oTMobL77kvP01hf4ct_w-119" value="OR&lt;br&gt;$$$" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="554.25" y="1940" width="52.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-120" value="View this listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="533.5" y="1245" width="63" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-121" value="Delete Listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="533.5" y="1290" width="63" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-122" value="View this listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1335" width="63" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-123" value="View this listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1430" width="63" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-124" value="Delete Listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1380" width="63" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oTMobL77kvP01hf4ct_w-125" value="Delete Listing" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1470" width="63" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

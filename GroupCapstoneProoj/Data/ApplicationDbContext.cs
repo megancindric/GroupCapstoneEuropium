@@ -30,9 +30,9 @@ namespace GroupCapstoneProoj.Data
             }
             );
         }
-        public DbSet<GroupCapstoneProoj.Models.Trader> Traders { get; set; }
+        public DbSet<Models.Trader> Traders { get; set; }
 
-        public DbSet<GroupCapstoneProoj.Models.Admin> Admins { get; set; }
+        public DbSet<Models.Admin> Admins { get; set; }
     }
 }
 

@@ -29,16 +29,6 @@ namespace GroupCapstoneProoj.Models
         [Required(ErrorMessage = "A price value is required")]
         public double Price { get; set; }
 
-        [Required(ErrorMessage = "Please enter your street number and name")]
-        [Display(Name = "Street Name")]
-        public string StreetName { get; set; }
-
-        [Required(ErrorMessage = "Please enter your city")]
-        public string City { get; set; }
-
-        [Required]
-        public string State { get; set; }
-
         [Required(ErrorMessage = "Please enter your zip code"), MaxLength(5)]
         [Display(Name = "Zip Code")]
 
@@ -46,6 +36,7 @@ namespace GroupCapstoneProoj.Models
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool IsArchived { get; set; }
 
     }
 }

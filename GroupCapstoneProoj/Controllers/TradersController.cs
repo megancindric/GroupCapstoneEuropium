@@ -222,7 +222,7 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditListing(int id, [Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing)
+        public IActionResult EditListing(int id, [Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,ZipCode,Latitude,Longitude")] Listing listing)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var listingToUpdate = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
@@ -232,9 +232,6 @@ namespace GroupCapstoneProoj.Controllers
                 listingToUpdate.Category = listing.Category;
                 listingToUpdate.Price = listing.Price;
                 listingToUpdate.InReturn = listing.InReturn;
-                listingToUpdate.StreetName = listing.StreetName;
-                listingToUpdate.City = listing.City;
-                listingToUpdate.State = listing.State;
                 listingToUpdate.ZipCode = listing.ZipCode;
                 _context.SaveChanges();
             }

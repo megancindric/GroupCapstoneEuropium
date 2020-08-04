@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using GroupCapstoneProoj.ActionFilters;
+using GroupCapstoneProoj.Contracts;
 
 namespace GroupCapstoneProoj
 {
@@ -38,6 +39,7 @@ namespace GroupCapstoneProoj
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddControllers(config =>
             {

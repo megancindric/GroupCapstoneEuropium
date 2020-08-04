@@ -1,0 +1,83 @@
+﻿@model TraderIndexViewModel
+
+@{
+    ViewData["Title"] = "ListingDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+
+
+    <div class="col-md-4">
+        <form asp-action="Browse">
+            <div class="form-group">
+                <label asp-for="SelectedCategory" class="control-label"></label>
+                <select asp-for="SelectedCategory" asp-items="@Model.CategoryList" class="form-control"></select>
+                <span asp-validation-for="CategoryList" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filter By Category" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].ListingName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].InReturn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Listings[0].ZipCode)
+                </th>
+                <th>
+                    Customer Options:
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Listings)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InReturn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    <a asp-action="StartTrading" asp-route-id="@item.Id">Let's Trade!</a> |
+                    <a asp-action="ListingDetails" asp-route-id="@item.Id">View Listing Details</a> |
+                    <a asp-action="DeleteCustomer" asp-route-id="@item.Id">Remove Listing [TESTING]</a>
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>

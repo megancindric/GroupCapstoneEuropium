@@ -45,23 +45,12 @@ namespace GroupCapstoneProoj.Controllers
             viewModel.Listings = new List<Listing>();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
-            var localListing = _context.Listings.Where(s => s.ZipCode == currentEmployee.ZipCode && s.PickupDay == viewModel.SelectedDay && s.LastPickupDate != DateTime.Now).ToList();
-            var extraPickupCustomers = _context.Customers.Where(s => s.ExtraPickupDate != default && s.LastPickupDate != DateTime.Now).ToList();
-            foreach (Customer customer in regularCustomers)
+            var localListing = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+            foreach(Listing listing in localListing)
             {
-                if (!IsSuspended(customer))
-                {
-                    viewModel.Customers.Add(customer);
-                }
+                viewModel.Listings.Add(listing);
             }
 
-            foreach (Customer customer in extraPickupCustomers)
-            {
-                if (customer.ZipCode == currentEmployee.ZipCode && customer.ExtraPickupDate.DayOfWeek.ToString() == viewModel.SelectedDay && !IsSuspended(customer))
-                {
-                    viewModel.Customers.Add(customer);
-                }
-            }
             return View(viewModel);
         }
 
@@ -71,22 +60,10 @@ namespace GroupCapstoneProoj.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             viewModel.Listings = new List<Listing>();
-            var regularCustomers = _context.Customers.Where(s => s.ZipCode == currentEmployee.ZipCode && s.PickupDay == viewModel.SelectedDay && s.LastPickupDate != DateTime.Now).ToList();
-            var extraPickupCustomers = _context.Customers.Where(s => s.ExtraPickupDate != default && s.LastPickupDate != DateTime.Now).ToList();
-            foreach (Customer customer in regularCustomers)
+            var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+            foreach (Listing listing in currentListings)
             {
-                if (!IsSuspended(customer))
-                {
-                    viewModel.Customers.Add(customer);
-                }
-            }
-
-            foreach (Customer customer in extraPickupCustomers)
-            {
-                if (customer.ZipCode == currentEmployee.ZipCode && customer.ExtraPickupDate.DayOfWeek.ToString() == viewModel.SelectedDay && !IsSuspended(customer))
-                {
-                    viewModel.Customers.Add(customer);
-                }
+                viewModel.Listings.Add(listing);
             }
             return View(viewModel);
         }
@@ -207,6 +184,25 @@ namespace GroupCapstoneProoj.Controllers
         private bool TraderExists(int id)
         {
             return _context.Traders.Any(e => e.Id == id);
+        }
+
+        public IActionResult CreateListing()
+        {
+            return View();
+        }
+
+        // POST: Listing/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateListing([Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            listing.IdentityUserId = userId;
+            _context.Add(listing);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
     }

@@ -1,31 +1,43 @@
-﻿@model GroupCapstoneProoj.Models.Trader
+﻿@model GroupCapstoneProoj.Models.Listing
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var selectListCategory = new SelectList(new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Goods", Value = "Goods"},
+            new SelectListItem {Text = "Services", Value = "Services"},
+         }, "Value", "Text");
 }
-
-<h1>Create</h1> 
-<h4>Trader</h4>
+<h4>Listing</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="CreateListing">
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="ListingName" class="control-label"></label>
+                <input asp-for="ListingName" class="form-control" />
+                <span asp-validation-for="ListingName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="Category" class="control-label">Select Your Listing's Category</label>
+                <select asp-for="Category" class="form-control" asp-items="selectListCategory"></select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InReturn" class="control-label"></label>
+                <input asp-for="InReturn" class="form-control" />
+                <span asp-validation-for="InReturn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StreetName" class="control-label"></label>

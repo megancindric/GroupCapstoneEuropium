@@ -112,7 +112,14 @@ namespace GroupCapstoneProoj.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (Input.Role == "Admin")
+                        {
+                            return LocalRedirect("~/Admins/Create");
+                        }
+                        else
+                        {
+                            return LocalRedirect("~/Traders/Create");
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
@@ -120,9 +127,8 @@ namespace GroupCapstoneProoj.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
             // If we got this far, something failed, redisplay form
-            return Page();
+            return LocalRedirect("~/Account/Register");
         }
     }
 }

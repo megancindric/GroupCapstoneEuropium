@@ -45,11 +45,6 @@ namespace GroupCapstoneProoj.Models
 
         public string ZipCode { get; set; }
 
-<<<<<<< HEAD
-       
-
-=======
->>>>>>> 55d86bb03a8c49e0b3984e60bea439bd9634c9be
         public double Latitude { get; set; }
         public double Longitude { get; set; }
     }

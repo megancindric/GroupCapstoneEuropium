@@ -9,6 +9,8 @@
 
 <h3>Welcome to your Dashboard</h3>
 
+<button type="button" onclick="" class="btn btn-outline-warning">Create A Listing</button>
+
 <h3 class="display-3">My Curret Listings</h3>
 <div class="jumbotron">
 
@@ -62,7 +64,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(model => model.FirstName)
-<<<<<<< HEAD
             </td>
             <td>
                 @Html.DisplayFor(model => model.LastName)
@@ -85,31 +86,6 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@Model.Id">Edit my Profile</a> |
                 <a asp-action="Delete" asp-route-id="@Model.Id">Delete my Profile</a>
-=======
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.StreetName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.City)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.State)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.ZipCode)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
->>>>>>> 55d86bb03a8c49e0b3984e60bea439bd9634c9be
             </td>
         </tr>
     </tbody>

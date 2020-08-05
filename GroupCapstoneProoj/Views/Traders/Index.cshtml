@@ -8,7 +8,9 @@
 <h1>Hello, Trader @Html.DisplayFor(model => model.Trader.FirstName)!</h1>
 
 <h3>Welcome to your Dashboard</h3>
-
+<div>
+    <img src="~/img/@Model.Trader.ProfilePicture" style="width:100px; height:auto"/>
+</div>
 <button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning">Create A Listing</button>
 <br />
 <div class="row" style="padding: 20px">

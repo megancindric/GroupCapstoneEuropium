@@ -48,5 +48,8 @@ namespace GroupCapstoneProoj.Models
 
         public bool IsArchived { get; set; }
 
+        public string imageOne { get; set; }
+        public string imageTwo { get; set; }
+        public string imageThree { get; set; }
     }
 }

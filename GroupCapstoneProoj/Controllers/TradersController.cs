@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GroupCapstoneProoj.Data;
-using GroupCapstoneProoj.Models;
-using System.Security.Claims;
-using System.IO;
-using System.Web;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
-
-namespace GroupCapstoneProoj.Controllers
+﻿namespace GroupCapstoneProoj.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Claims;
+    using CloudinaryDotNet.Actions;
+    using GroupCapstoneProoj.Data;
+    using GroupCapstoneProoj.Models;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.FileProviders;
+    using Microsoft.VisualBasic;
+
     public class TradersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,42 +36,18 @@ namespace GroupCapstoneProoj.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public ActionResult Index(TraderIndexViewModel viewModel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
-            
+
             foreach (Listing listing in myListings)
             {
                 viewModel.MyListings.Add(listing);
             }
             return View(viewModel);
-        }
-
-        public void UploadImage(IFormFile files) 
-        {
-            if (files != null)
-            {
-                
-                    if (files.Length > 0)
-                    {
-                        var fileName = Path.GetFileName(files.FileName);
-                        var myFileName = Convert.ToString(Guid.NewGuid());
-                        var fileExtension = Path.GetExtension(fileName);
-                        var newFileName = string.Concat(myFileName, fileExtension);
-                        var filePath = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")).Root + $@"\{newFileName}";
-
-                        using (FileStream fs = System.IO.File.Create(filePath))
-                        {
-                        files.CopyTo(fs);
-                            fs.Flush();
-                        }
-                    }
-                
-            }
         }
 
         // GET: Employees
@@ -85,7 +60,7 @@ namespace GroupCapstoneProoj.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var localListing = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
-            foreach(Listing listing in localListing)
+            foreach (Listing listing in localListing)
             {
                 viewModel.Listings.Add(listing);
             }
@@ -122,7 +97,6 @@ namespace GroupCapstoneProoj.Controllers
             {
                 return View(trader);
             }
-
         }
 
         // GET: Traders/Create
@@ -163,7 +137,7 @@ namespace GroupCapstoneProoj.Controllers
         public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader, IFormFile files)
         {
 
-            UploadImage(files);
+            var fileName = UploadImage(files);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var traderToUpdate = _context.Traders.Where(c => c.IdentityUserId == userId).SingleOrDefault();
@@ -176,6 +150,7 @@ namespace GroupCapstoneProoj.Controllers
                 traderToUpdate.City = trader.City;
                 traderToUpdate.State = trader.State;
                 traderToUpdate.ZipCode = trader.ZipCode;
+                traderToUpdate.ProfilePicture = fileName;
                 //traderToUpdate = GeocodeCustomer(traderToUpdate);
                 _context.SaveChanges();
             }
@@ -191,6 +166,60 @@ namespace GroupCapstoneProoj.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public string UploadImage(IFormFile files)
+        {
+            var myFileName = "";
+            if (files != null)
+            {
+
+                if (files.Length > 0)
+                {
+                    var fileName = Path.GetFileName(files.FileName);
+                    myFileName = Convert.ToString(Guid.NewGuid());
+                    var fileExtension = Path.GetExtension(fileName);
+                    var newFileName = string.Concat(myFileName, fileExtension);
+                    var filePath = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")).Root + $@"\{newFileName}";
+
+                    using (FileStream fs = System.IO.File.Create(filePath))
+                    {
+                        files.CopyTo(fs);
+                        fs.Flush();
+                    }
+                    return newFileName;
+                }
+
+            }
+            return myFileName;
+        }
+
+        public List<string> UploadImage(List<IFormFile> files)
+        {
+            var myFileName = new List<string>();
+            if (files != null)
+            {
+                foreach (var item in files)
+                {
+                    if (item.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(item.FileName);
+                        var fileNameString = Convert.ToString(Guid.NewGuid());
+                        var fileExtension = Path.GetExtension(fileName);
+                        var newFileName = string.Concat(fileNameString, fileExtension);
+                        var filePath = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "ListingImgs")).Root + $@"\{newFileName}";
+
+                        using (FileStream fs = System.IO.File.Create(filePath))
+                        {
+                            item.CopyTo(fs);
+                            fs.Flush();
+                        }
+                        myFileName.Add(newFileName);
+
+                    }
+                }
+            }
+            return myFileName;
         }
 
         // GET: Traders/Delete/5
@@ -243,8 +272,13 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateListing([Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing)
+        public IActionResult CreateListing([Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing, List<IFormFile> files)
         {
+            List<string> imageList = UploadImage(files);
+            listing.imageOne = imageList[0];
+            listing.imageTwo = imageList[1];
+            listing.imageThree = imageList[2];
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             listing.IdentityUserId = userId;
             _context.Add(listing);
@@ -324,8 +358,7 @@ namespace GroupCapstoneProoj.Controllers
         public IActionResult ListingDetails(int? id)
         {
 
-            var listing = _context.Traders
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var listing = _context.Listings.Where(m => m.Id == id).FirstOrDefault();
             if (listing == null)
             {
                 return NotFound();
@@ -334,8 +367,6 @@ namespace GroupCapstoneProoj.Controllers
             {
                 return View(listing);
             }
-
         }
-
     }
 }

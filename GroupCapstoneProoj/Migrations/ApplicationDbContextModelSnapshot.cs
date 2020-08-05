@@ -88,6 +88,15 @@ namespace GroupCapstoneProoj.Migrations
                         .HasColumnType("nvarchar(5)")
                         .HasMaxLength(5);
 
+                    b.Property<string>("imageOne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageThree")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageTwo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityUserId");
@@ -125,6 +134,9 @@ namespace GroupCapstoneProoj.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePicture")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
@@ -176,16 +188,15 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "55d3a7aa-76b2-4e90-9ea3-4b9c34cec6a0",
-                            ConcurrencyStamp = "59d3deb2-429f-44a6-bc9b-38707f2ae8a8",
+                            Id = "864120d6-a2c9-48c1-b1d8-7e33f01d56b4",
+                            ConcurrencyStamp = "c5672856-d009-4588-bca7-1047d0c90ce9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "42f0461d-a154-4d7d-961b-150385cb3d02",
-                            ConcurrencyStamp = "123c71e1-7fed-406c-a9a7-748ab55e10c9",
-
+                            Id = "0806662a-180a-47b6-844e-41ef810756df",
+                            ConcurrencyStamp = "27183b47-5c9c-48c1-b268-503017ca9b59",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

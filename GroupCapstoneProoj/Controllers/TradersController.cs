@@ -13,6 +13,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.VisualBasic;
+    using Stripe;
 
     public class TradersController : Controller
     {
@@ -367,6 +368,57 @@
             {
                 return View(listing);
             }
+        }
+
+        public string MakePayment(int?id)
+        {
+
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
+
+            var listing = _context.Listings.Where(l => l.Id == id).FirstOrDefault();
+
+            //var options = new RequestOptions
+            //{
+            //    ApiKey = "sk_test_51H7pRTHVSJCHPuZaNpLqbbw6nUXpWWOYvvS6o3dNggkdoq0JX0WPqeFjXiHmlkfnOBkgcjC1kHBJklmEuyXO8Yyj00y0tEtWPL"
+            //};
+            //var service = new ChargeService();
+            //Charge charge = service.Get("ch_1H7xFAHVSJCHPuZaaMbsiJLS", options);
+
+            Stripe.StripeConfiguration.ApiKey = "sk_test_51H7pRTHVSJCHPuZaNpLqbbw6nUXpWWOYvvS6o3dNggkdoq0JX0WPqeFjXiHmlkfnOBkgcjC1kHBJklmEuyXO8Yyj00y0tEtWPL";
+            Stripe.CreditCardOptions card = new Stripe.CreditCardOptions();
+            card.Name = trader.FirstName + " " + trader.LastName;
+            card.Number = "4242424242424242";
+            card.ExpMonth = 9;
+            card.ExpYear = 2021;
+            card.Cvc = "122";
+
+            Stripe.TokenCreateOptions tokenCreateOption = new Stripe.TokenCreateOptions();
+            tokenCreateOption.Card = card;
+            Stripe.TokenService tokenService = new Stripe.TokenService();
+            Stripe.Token token = tokenService.Create(tokenCreateOption);
+
+            Stripe.CustomerCreateOptions customer = new Stripe.CustomerCreateOptions();
+            customer.Source = token.Id;
+            var custService = new Stripe.CustomerService();
+            Stripe.Customer stpCustomer = custService.Create(customer);
+
+            var options = new Stripe.ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(listing.Price),
+                Currency = "USD",
+                Customer = stpCustomer.Id,
+                Description = listing.ListingName,
+            };
+
+            var service = new Stripe.ChargeService();
+            Stripe.Charge charge = service.Create(options);
+
+            var status = charge.Status;
+
+            return status;
+
         }
     }
 }

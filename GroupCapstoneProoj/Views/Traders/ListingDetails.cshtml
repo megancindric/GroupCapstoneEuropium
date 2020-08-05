@@ -117,6 +117,14 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <form asp-action="MakePayment" method="post" asp-route-id="@Model.Id">
+        <button class="stripe-button" name="Puchase">Purchase</button>
+             
+
+    </form>
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

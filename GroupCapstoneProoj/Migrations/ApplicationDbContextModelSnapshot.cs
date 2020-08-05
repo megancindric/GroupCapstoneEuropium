@@ -56,6 +56,9 @@ namespace GroupCapstoneProoj.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BuyerRating")
+                        .HasColumnType("int");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -73,6 +76,10 @@ namespace GroupCapstoneProoj.Migrations
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
+                    b.Property<string>("ListingDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ListingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,6 +89,12 @@ namespace GroupCapstoneProoj.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<string>("PurchasedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SellerRating")
+                        .HasColumnType("int");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
@@ -117,6 +130,9 @@ namespace GroupCapstoneProoj.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoodsServicesAvailable")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentityUserId")
@@ -188,15 +204,15 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39b089b8-d46e-4d44-8f9b-5263a0f376a4",
-                            ConcurrencyStamp = "aa83f142-f350-403f-a1ce-7ad2e6f9b73d",
+                            Id = "a4bcb740-0689-48d0-b8e1-84453b1f9434",
+                            ConcurrencyStamp = "b05d1d16-4a59-4130-893c-c12fb849b101",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "782bd606-f57c-42b0-ad4b-733b56d29a4c",
-                            ConcurrencyStamp = "d9e9e9b2-8072-40b1-9141-b4df6223f3af",
+                            Id = "e3039995-25cb-4fd5-8765-c0b3adeb6cdd",
+                            ConcurrencyStamp = "e5e90a7d-0c4f-4c96-bf3b-3ad9ec089593",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

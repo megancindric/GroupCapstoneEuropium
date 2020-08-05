@@ -32,6 +32,10 @@ namespace GroupCapstoneProoj.Models
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Goods & Services I Offer")]
+
+        public string GoodsServicesAvailable { get; set; }
+
         [Required(ErrorMessage = "Please enter your street number and name")]
         [Display(Name = "Street Name")]
         public string StreetName { get; set; }

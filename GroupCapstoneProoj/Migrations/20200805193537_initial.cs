@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupCapstoneProoj.Migrations
 {
-    public partial class migration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,6 +183,7 @@ namespace GroupCapstoneProoj.Migrations
                     IdentityUserId = table.Column<string>(nullable: true),
                     ListingName = table.Column<string>(nullable: false),
                     Category = table.Column<string>(nullable: false),
+                    ListingDescription = table.Column<string>(nullable: false),
                     InReturn = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     ZipCode = table.Column<string>(maxLength: 5, nullable: false),
@@ -191,7 +192,10 @@ namespace GroupCapstoneProoj.Migrations
                     IsArchived = table.Column<bool>(nullable: false),
                     imageOne = table.Column<string>(nullable: true),
                     imageTwo = table.Column<string>(nullable: true),
-                    imageThree = table.Column<string>(nullable: true)
+                    imageThree = table.Column<string>(nullable: true),
+                    PurchasedBy = table.Column<string>(nullable: true),
+                    BuyerRating = table.Column<int>(nullable: false),
+                    SellerRating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,6 +218,7 @@ namespace GroupCapstoneProoj.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
+                    GoodsServicesAvailable = table.Column<string>(nullable: true),
                     StreetName = table.Column<string>(nullable: false),
                     City = table.Column<string>(nullable: false),
                     State = table.Column<string>(nullable: false),
@@ -236,12 +241,12 @@ namespace GroupCapstoneProoj.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "864120d6-a2c9-48c1-b1d8-7e33f01d56b4", "c5672856-d009-4588-bca7-1047d0c90ce9", "Admin", "ADMIN" });
+                values: new object[] { "a4bcb740-0689-48d0-b8e1-84453b1f9434", "b05d1d16-4a59-4130-893c-c12fb849b101", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0806662a-180a-47b6-844e-41ef810756df", "27183b47-5c9c-48c1-b268-503017ca9b59", "Trader", "TRADER" });
+                values: new object[] { "e3039995-25cb-4fd5-8765-c0b3adeb6cdd", "e5e90a7d-0c4f-4c96-bf3b-3ad9ec089593", "Trader", "TRADER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

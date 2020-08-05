@@ -27,6 +27,11 @@ namespace GroupCapstoneProoj.Models
 
         public string Category { get; set; }
 
+        [Required(ErrorMessage = "Please enter a description of your listing")]
+        [Display(Name = "Description")]
+
+        public string ListingDescription { get; set; }
+
         [Required(ErrorMessage = "Please enter something you'd like in return")]
         [Display(Name = "Wanted in Return")]
 
@@ -51,5 +56,11 @@ namespace GroupCapstoneProoj.Models
         public string imageOne { get; set; }
         public string imageTwo { get; set; }
         public string imageThree { get; set; }
+
+        public string PurchasedBy { get; set; }
+
+        public int BuyerRating { get; set; }
+        public int SellerRating { get; set; }
+
     }
 }

@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.IO;
 using System.Web;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace GroupCapstoneProoj.Controllers
 {

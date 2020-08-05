@@ -55,6 +55,6 @@ namespace GroupCapstoneProoj.Models
         public double Longitude { get; set; }
         [NotMapped]
         [FileExtensions(Extensions ="jpg,jpeg,png")]
-        public IFormFile ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }

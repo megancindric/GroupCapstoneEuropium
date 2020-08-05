@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using GroupCapstoneProoj.Data;
 using GroupCapstoneProoj.Models;
 using System.Security.Claims;
+using System.IO;
+using System.Web;
+
 
 namespace GroupCapstoneProoj.Controllers
 {
@@ -33,8 +36,9 @@ namespace GroupCapstoneProoj.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
-        public ActionResult Index(TraderIndexViewModel viewModel)
+        public ActionResult Index(TraderIndexViewModel viewModel, List<IFormFile> files)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();

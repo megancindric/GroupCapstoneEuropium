@@ -1,4 +1,5 @@
-﻿@model GroupCapstoneProoj.Models.Trader
+﻿@using System.Data
+@model GroupCapstoneProoj.Models.Trader
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="FileUpload">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="Traders">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -49,7 +50,8 @@
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="file" name="files" multiple/>
+                @*<label asp-for="ProfilePicture" class="control-label">Upload Picture</label>*@
+                <input @*asp-for="ProfilePicture" class="form-control"*@ type="file" name="files" id="files" multiple="multiple"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

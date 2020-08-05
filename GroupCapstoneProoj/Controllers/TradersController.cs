@@ -10,7 +10,7 @@ using GroupCapstoneProoj.Models;
 using System.Security.Claims;
 using System.IO;
 using System.Web;
-
+using Microsoft.Extensions.FileProviders;
 
 namespace GroupCapstoneProoj.Controllers
 {
@@ -38,16 +38,40 @@ namespace GroupCapstoneProoj.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(TraderIndexViewModel viewModel, List<IFormFile> files)
+        public ActionResult Index(TraderIndexViewModel viewModel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
+            
             foreach (Listing listing in myListings)
             {
                 viewModel.MyListings.Add(listing);
             }
             return View(viewModel);
+        }
+
+        public void UploadImage(IFormFile files) 
+        {
+            if (files != null)
+            {
+                
+                    if (files.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(files.FileName);
+                        var myFileName = Convert.ToString(Guid.NewGuid());
+                        var fileExtension = Path.GetExtension(fileName);
+                        var newFileName = string.Concat(myFileName, fileExtension);
+                        var filePath = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img")).Root + $@"\{newFileName}";
+
+                        using (FileStream fs = System.IO.File.Create(filePath))
+                        {
+                        files.CopyTo(fs);
+                            fs.Flush();
+                        }
+                    }
+                
+            }
         }
 
         // GET: Employees
@@ -135,8 +159,11 @@ namespace GroupCapstoneProoj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
+        public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader, IFormFile files)
         {
+
+            UploadImage(files);
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var traderToUpdate = _context.Traders.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             try
@@ -271,7 +298,9 @@ namespace GroupCapstoneProoj.Controllers
                 return NotFound();
             }
 
-            var listing = _context.Listings.FirstOrDefault(m => m.Id == id);
+            var listing = _context.Listings
+                .Include(c => c.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (listing == null)
             {
                 return NotFound();
@@ -294,7 +323,8 @@ namespace GroupCapstoneProoj.Controllers
         public IActionResult ListingDetails(int? id)
         {
 
-            var listing = _context.Listings.FirstOrDefault(m => m.Id == id);
+            var listing = _context.Traders
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (listing == null)
             {
                 return NotFound();

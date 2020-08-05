@@ -76,10 +76,21 @@
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             viewModel.Listings = new List<Listing>();
-            var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
-            foreach (Listing listing in currentListings)
+            if(viewModel.SelectedCategory == "All")
             {
-                viewModel.Listings.Add(listing);
+               var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+                foreach (Listing listing in currentListings)
+                {
+                    viewModel.Listings.Add(listing);
+                }
+            }
+            else
+            {
+                var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.Category == viewModel.SelectedCategory).ToList();
+                foreach (Listing listing in currentListings)
+                {
+                    viewModel.Listings.Add(listing);
+                }
             }
             return View(viewModel);
         }

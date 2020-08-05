@@ -9,11 +9,11 @@
 
 <h3>Welcome to your Dashboard</h3>
 
-<button type="button" onclick="" class="btn btn-outline-warning">Create A Listing</button>
+<button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning">Create A Listing</button>
 <br />
 <div class="row" style="padding: 20px">
     <div class="col-md-5">
-        <h2>My Active Listings</h2>
+        <h1>My Active Listings</h1>
         <table class="table table-success">
             <thead>
                 <tr>
@@ -42,6 +42,11 @@
                     <td>
                         @Html.DisplayFor(listingItem => listing.InReturn)
                     </td>
+                    <td>
+                        <a asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
+                        <a asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
+                        <a asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
+                    </td>
                 </tr>
                     }
 
@@ -51,8 +56,8 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-5"><h2>My Purchase History</h2></div>
-    <div class="col-md-2"><h2>Notifications</h2></div>
+    <div class="col-md-5"><h1>My Purchase History</h1></div>
+    <div class="col-md-2"><p>Notifications</p></div>
 </div>
 
 <table class="table">

@@ -83,7 +83,7 @@ namespace GroupCapstoneProoj.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect("~/Traders/Index");
                 }
                 if (result.RequiresTwoFactor)
                 {

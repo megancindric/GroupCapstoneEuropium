@@ -34,6 +34,7 @@
             viewModel.MyListings = new List<Listing>();
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             viewModel.MyListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
+            viewModel.MyPurchases = _context.Listings.Where(s => s.PurchasedBy == userId && s.IsArchived).ToList();
 
             return View(viewModel);
         }
@@ -44,10 +45,15 @@
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
+            var myPurchases = _context.Listings.Where(s => s.PurchasedBy == userId && s.IsArchived).ToList();
 
             foreach (Listing listing in myListings)
             {
                 viewModel.MyListings.Add(listing);
+            }
+            foreach (Listing listing in myPurchases)
+            {
+                viewModel.MyPurchases.Add(listing);
             }
             return View(viewModel);
         }

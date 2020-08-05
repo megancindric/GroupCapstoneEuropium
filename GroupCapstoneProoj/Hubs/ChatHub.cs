@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.AspNetCore.SignalR;
-using Owin;
+﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
 namespace SignalRChat.Hubs

@@ -59,5 +59,6 @@ namespace GroupCapstoneProoj.Models
         public double Longitude { get; set; }
                 
         public string ProfilePicture { get; set; }
+        public int Rating { get; set; }
     }
 }

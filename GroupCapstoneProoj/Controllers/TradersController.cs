@@ -382,7 +382,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult ListingDetails(int? id)
+        public IActionResult ListingDetails(int? id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var buyer = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
@@ -403,8 +403,7 @@
             }
         }
 
-
-        public string MakePayment(int?id)
+        public ActionResult MakePayment(int?id)
         {
 
 
@@ -451,7 +450,15 @@
 
             var status = charge.Status;
 
-            return status;
+            if (status == "succeeded")
+            {
+                return RedirectToAction("CompleteTransaction", new { id = id });
+            }
+            else
+            {
+
+                return RedirectToAction("FailedTransaction");
+            }
 
         }
 
@@ -469,6 +476,26 @@
             listing.Longitude = latlong.Longitude;
             return listing;
 
+        }
+
+        public ActionResult CompleteTransaction(int id)
+        {
+            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            return View(listing);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CompleteTransaction(int id, string starValue)
+        {
+            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            var seller = _context.Traders.Where(t => t.IdentityUserId == listing.IdentityUserId).FirstOrDefault();
+            listing.SellerRating = Int32.Parse(starValue);
+            seller.Rating = Int32.Parse(starValue);
+            _context.Listings.Update(listing);
+            _context.Traders.Update(seller);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

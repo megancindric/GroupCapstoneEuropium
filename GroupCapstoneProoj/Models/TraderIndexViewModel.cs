@@ -9,6 +9,8 @@ namespace GroupCapstoneProoj.Models
     public class TraderIndexViewModel
     {
         public List<Listing> MyListings { get; set; }
+        public List<Listing> MyPurchases { get; set; }
+
 
         public Trader Trader { get; set; }
     }

@@ -14,6 +14,7 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.VisualBasic;
     using Stripe;
+    using Stripe.Radar;
 
     public class TradersController : Controller
     {
@@ -75,10 +76,21 @@
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             viewModel.Listings = new List<Listing>();
-            var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
-            foreach (Listing listing in currentListings)
+            if(viewModel.SelectedCategory == "All")
             {
-                viewModel.Listings.Add(listing);
+               var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+                foreach (Listing listing in currentListings)
+                {
+                    viewModel.Listings.Add(listing);
+                }
+            }
+            else
+            {
+                var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.Category == viewModel.SelectedCategory).ToList();
+                foreach (Listing listing in currentListings)
+                {
+                    viewModel.Listings.Add(listing);
+                }
             }
             return View(viewModel);
         }
@@ -111,11 +123,13 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader)
+        public IActionResult Create([Bind("Id,IdentityUserId,FirstName,LastName,GoodsServicesAvailable,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader, IFormFile files)
         {
+            var fileName = UploadImage(files);
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             trader.IdentityUserId = userId;
-            //Google Maps API? customer = GeocodeCustomer(customer);
+            trader.ProfilePicture = fileName;
             _context.Add(trader);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -125,7 +139,7 @@
         public IActionResult Edit()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var trader = _context.Traders.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var trader = _context.Traders.Where(c => c.IdentityUserId == userId).FirstOrDefault();
 
             return View(trader);
         }
@@ -135,7 +149,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader, IFormFile files)
+        public IActionResult Edit(int id, [Bind("Id,IdentityUserId,FirstName,LastName,GoodsServicesAvailable,PhoneNumber,StreetName,City,State,ZipCode,Latitude,Longitude")] Trader trader, IFormFile files)
         {
 
             var fileName = UploadImage(files);
@@ -147,6 +161,7 @@
                 traderToUpdate.FirstName = trader.FirstName;
                 traderToUpdate.LastName = trader.LastName;
                 traderToUpdate.PhoneNumber = trader.PhoneNumber;
+                traderToUpdate.GoodsServicesAvailable = trader.GoodsServicesAvailable;
                 traderToUpdate.StreetName = trader.StreetName;
                 traderToUpdate.City = trader.City;
                 traderToUpdate.State = trader.State;
@@ -273,7 +288,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateListing([Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,City,State,ZipCode,Latitude,Longitude")] Listing listing, List<IFormFile> files)
+        public IActionResult CreateListing([Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,StreetName,ListingDescription,PurchasedBy,BuyerRating,SellerRating,City,State,ZipCode,Latitude,Longitude")] Listing listing, List<IFormFile> files)
         {
             List<string> imageList = UploadImage(files);
             listing.imageOne = imageList[0];
@@ -299,7 +314,7 @@
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditListing(int id, [Bind("Id,IdentityUserId,ListingName,Category,InReturn,Price,ZipCode,Latitude,Longitude")] Listing listing)
+        public IActionResult EditListing(int id, [Bind("Id,IdentityUserId,ListingName,Category,InReturn,ListingDescription,PurchasedBy,BuyerRating,SellerRating,Price,ZipCode,Latitude,Longitude")] Listing listing)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var listingToUpdate = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
@@ -308,6 +323,7 @@
                 listingToUpdate.ListingName = listing.ListingName;
                 listingToUpdate.Category = listing.Category;
                 listingToUpdate.Price = listing.Price;
+                listingToUpdate.ListingDescription = listing.ListingDescription;
                 listingToUpdate.InReturn = listing.InReturn;
                 listingToUpdate.ZipCode = listing.ZipCode;
                 _context.SaveChanges();

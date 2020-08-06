@@ -9,9 +9,11 @@
 
 <h3>Welcome to your Dashboard</h3>
 <div>
-    <img src="~/img/@Model.Trader.ProfilePicture" style="width:100px; height:auto"/>
+    <img src="~/img/@Model.Trader.ProfilePicture" style="width:100px; height:auto" />
 </div>
 <button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning">Create A Listing</button>
+<br />
+<button type="button" value="Browse" onclick="location.href='@Url.Action("Browse", "Traders")'" class="btn btn-outline-warning">Browse Listing</button>
 <br />
 <div class="row" style="padding: 20px">
     <div class="col-md-5">
@@ -31,26 +33,26 @@
                 {
                     if (!listing.IsArchived)
                     {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(listingItem => listing.ListingName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(listingItem => listing.Category)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(listingItem => listing.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(listingItem => listing.InReturn)
-                    </td>
-                    <td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(listingItem => listing.ListingName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(listingItem => listing.Category)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(listingItem => listing.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(listingItem => listing.InReturn)
+                            </td>
+                            <td>
 
-                        <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
-                        <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
-                        <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
-                    </td>
-                </tr>
+                                <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
+                                <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
+                                <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
+                            </td>
+                        </tr>
                     }
 
                 }
@@ -59,7 +61,7 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-5" style="text-align:center;" ><h1>My Purchase History</h1></div>
+    <div class="col-md-5" style="text-align:center;"><h1>My Purchase History</h1></div>
     <div class="col-md-2"><p>Notifications</p></div>
 </div>
 

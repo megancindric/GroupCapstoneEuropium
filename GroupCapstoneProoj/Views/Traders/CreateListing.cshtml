@@ -21,6 +21,11 @@
                 <span asp-validation-for="ListingName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ListingDescription" class="control-label"></label>
+                <input asp-for="ListingDescription" class="form-control" />
+                <span asp-validation-for="ListingDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Category" class="control-label">Select Your Listing's Category</label>
                 <select asp-for="Category" class="form-control" asp-items="selectListCategory"></select>
                 <span asp-validation-for="Category" class="text-danger"></span>
@@ -31,6 +36,7 @@
                 <span asp-validation-for="InReturn" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <p>Please enter price in $XX.XX format</p>
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
@@ -41,6 +47,7 @@
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <p>Please select three (3) pictures to upload. </p>
                 <input type="file" name="files" id="files" multiple />
             </div>
             <div class="form-group">

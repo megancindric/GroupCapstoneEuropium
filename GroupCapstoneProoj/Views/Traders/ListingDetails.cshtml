@@ -4,124 +4,120 @@
     ViewData["Title"] = "ListingDetails";
 }
 
-<h1>ListingDetails</h1>
+<h1>@Model.ListingName</h1>
 
 <div class="container">
-    <div id="demo" class="carousel slide" width : 25% data-ride="carousel">
-
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-        </ul>
-
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-            <div class="carousel-item active img-fluid">
-                <img src="~/ListingImgs/@Model.imageOne" />
-            </div>
-            <div class="carousel-item img-fluid">
-                <img src="~/ListingImgs/@Model.imageTwo" />
-            </div>
-            <div class="carousel-item img-fluid">
-                <img src="~/ListingImgs/@Model.imageThree" alt="imageThree" />
-            </div>
+    <div class="row">
+        <div class=" col-md-6">
+            <h4>Listing Details</h4>
+            <hr />
+            <div class="row"></div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ListingName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ListingName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ListingDescription)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ListingDescription)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.InReturn)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.InReturn)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ZipCode)
+                </dd>
+            </dl>
         </div>
+        <div class="col-md-6">
+            <div id="demo" class="carousel slide" width : 25% data-ride="carousel">
 
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
+                <!-- Indicators -->
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
 
-    </div>
-
-
-
-
-    <div>
-        <h4>Listing</h4>
-        <hr />
-        <div class="row"></div>
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.IdentityUser.Id)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ListingName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ListingName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Category)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Category)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.InReturn)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.InReturn)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Price)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Price)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ZipCode)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ZipCode)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Latitude)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Latitude)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Longitude)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Longitude)
-            </dd>
-
-        </dl>
-        <div class="card border-success mb-3" style="max-width: 20rem;">
-            <h3 style="text-align : center">Let's Trade!</h3>
-            <div class="row">
-                <div class="col-4" style="text-align:center">Username:</div>
-                <div class="col-4"><input type="text" id="userInput" /></div>
-            </div>
-            <div class="row">
-                <div class="col-4" style="text-align:center">Message:</div>
-                <div class="col-4"><input type="text" id="messageInput" /></div>
-            </div>
-            <div class="row">&nbsp;</div>
-
-            <div class="row">
-                <div class="col-12" style="text-align:center">
-                    <input type="button" class="btn btn-outline-warning btn-sm" id="sendButton" value="Send Message" />
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img style="width: auto; margin: 0 auto; height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageOne" />
+                    </div>
+                    <div class="carousel-item">
+                        <img style="width: auto;  margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageTwo" />
+                    </div>
+                    <div class="carousel-item">
+                        <img style="width: auto; margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageThree" alt="imageThree" />
+                    </div>
                 </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+
             </div>
-            <div class="card-body">
-                <ul id="messagesList"></ul>
-            </div>
-        </div> 
+
+        </div>
+    </div>
+  
+</div>
+<div class="container; col-md-6" style="float:left>
+   
+</div>
+
+
+
+<div class="card border-success mb-3" style="max-width: 20rem;">
+    <h3 style="text-align : center">Let's Trade!</h3>
+    <div class="row">
+        <div class="col-4" style="text-align:center">Username:</div>
+        <div class="col-4"><input type="text" id="userInput" /></div>
+    </div>
+    <div class="row">
+        <div class="col-4" style="text-align:center">Message:</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-12" style="text-align:center">
+            <input type="button" class="btn btn-outline-warning btn-sm" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+    <div class="card-body">
+        <ul id="messagesList"></ul>
     </div>
 </div>
 
-<div>
+
+<div class="col-md-6">
     <form asp-action="MakePayment" method="post" asp-route-id="@Model.Id">
         <button class="stripe-button" name="Puchase">Purchase</button>
 

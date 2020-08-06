@@ -1,10 +1,10 @@
-﻿@model GroupCapstoneProoj.Models.Listing
+﻿@model GroupCapstoneProoj.Models.TraderListingViewModel
 
 @{
     ViewData["Title"] = "ListingDetails";
 }
 
-<h1>@Model.ListingName</h1>
+<h1>@Model.CurrentListing.ListingName</h1>
 
 <div class="container">
     <div class="row">
@@ -14,40 +14,40 @@
             <div class="row"></div>
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ListingName)
+                    @Html.DisplayNameFor(model => model.CurrentListing.ListingName)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ListingName)
+                    @Html.DisplayFor(model => model.CurrentListing.ListingName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ListingDescription)
+                    @Html.DisplayNameFor(model => model.CurrentListing.ListingDescription)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ListingDescription)
+                    @Html.DisplayFor(model => model.CurrentListing.ListingDescription)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Category)
+                    @Html.DisplayNameFor(model => model.CurrentListing.Category)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Category)
+                    @Html.DisplayFor(model => model.CurrentListing.Category)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.InReturn)
+                    @Html.DisplayNameFor(model => model.CurrentListing.InReturn)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.InReturn)
+                    @Html.DisplayFor(model => model.CurrentListing.InReturn)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Price)
+                    @Html.DisplayNameFor(model => model.CurrentListing.Price)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Price)
+                    @Html.DisplayFor(model => model.CurrentListing.Price)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ZipCode)
+                    @Html.DisplayNameFor(model => model.CurrentListing.ZipCode)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ZipCode)
+                    @Html.DisplayFor(model => model.CurrentListing.ZipCode)
                 </dd>
             </dl>
         </div>
@@ -64,13 +64,13 @@
                 <!-- The slideshow -->
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img style="width: auto; margin: 0 auto; height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageOne" />
+                        <img style="width: auto; margin: 0 auto; height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.CurrentListing.imageOne" />
                     </div>
                     <div class="carousel-item">
-                        <img style="width: auto;  margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageTwo" />
+                        <img style="width: auto;  margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.CurrentListing.imageTwo" />
                     </div>
                     <div class="carousel-item">
-                        <img style="width: auto; margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.imageThree" alt="imageThree" />
+                        <img style="width: auto; margin: 0 auto;height: 500px; max-height: 500px;" src="~/ListingImgs/@Model.CurrentListing.imageThree" alt="imageThree" />
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
     <h3 style="text-align : center">Let's Trade!</h3>
     <div class="row">
         <div class="col-4" style="text-align:center">Username:</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
+        <div class="col-4" id="currentUserName"></div>
     </div>
     <div class="row">
         <div class="col-4" style="text-align:center">Message:</div>
@@ -107,7 +107,7 @@
 
     <div class="row">
         <div class="col-12" style="text-align:center">
-            <input type="button"class="btn btn-outline-warning btn-sm" id="sendButton" onclick="document.getElementById('messageInput').value = ''"value="Send Message" />
+            <input type="button"class="btn btn-outline-warning btn-sm" id="sendButton"value="Send Message" />
         </div>
     </div>
     <div class="card-body">
@@ -117,14 +117,14 @@
 </div>
 
 <div class="col-md-6">
-    <form asp-action="MakePayment" method="post" asp-route-id="@Model.Id">
+    <form asp-action="MakePayment" method="post" asp-route-id="@Model.CurrentListing.Id">
         <button class="stripe-button" name="Puchase">Purchase</button>
 
 
     </form>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.CurrentListing.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 
@@ -140,7 +140,7 @@
         defer></script>
 <script>
     function initAutocomplete() {
-        var listingLocation = { lat: @Model.Latitude, lng: @Model.Longitude };
+        var listingLocation = { lat: @Model.CurrentListing.Latitude, lng: @Model.CurrentListing.Longitude };
         const map = new google.maps.Map(document.getElementById("map"), {
             center: listingLocation,
             zoom: 13,

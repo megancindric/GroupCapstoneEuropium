@@ -382,19 +382,27 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ListingDetails(int? id)
+        public ActionResult ListingDetails(int? id)
         {
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var buyer = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var listing = _context.Listings.Where(m => m.Id == id).FirstOrDefault();
+            var seller = _context.Traders.Where(s => s.IdentityUserId == listing.IdentityUserId).FirstOrDefault();
             if (listing == null)
             {
                 return NotFound();
             }
             else
             {
-                return View(listing);
+                TraderListingViewModel viewModel = new TraderListingViewModel();
+                viewModel.CurrentListing = listing;
+                viewModel.CurrentSeller = seller;
+                viewModel.CurrentBuyer = buyer;
+
+                return View(viewModel);
             }
         }
+
 
         public string MakePayment(int?id)
         {

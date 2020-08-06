@@ -207,15 +207,15 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b6818b4-1a08-4167-80c7-78b229638275",
-                            ConcurrencyStamp = "2da29c28-ca06-4c40-bfe7-373265f42a5c",
+                            Id = "3cd41a41-fa45-4a4f-8357-c011bb2cb810",
+                            ConcurrencyStamp = "e1483757-1f1b-4fea-8ea6-5cf54b4bb8c8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "185ebf89-3c3a-496a-9979-dfdd116a31fa",
-                            ConcurrencyStamp = "d1e401d5-bc3c-46a4-acd0-575ef73b23f1",
+                            Id = "eaabe710-645e-4ddc-87fb-bd2eebc2be4d",
+                            ConcurrencyStamp = "1f71272a-4795-4c99-9827-91e91c78f2c5",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

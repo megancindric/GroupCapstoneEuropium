@@ -428,7 +428,7 @@
 
             var options = new Stripe.ChargeCreateOptions
             {
-                Amount = Convert.ToInt32(listing.Price),
+                Amount = (Convert.ToInt32(listing.Price) * 100),
                 Currency = "USD",
                 Customer = stpCustomer.Id,
                 Description = listing.ListingName,

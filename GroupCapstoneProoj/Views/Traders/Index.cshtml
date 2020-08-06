@@ -6,82 +6,88 @@
 }
 
 <h1>Hello, Trader @Html.DisplayFor(model => model.Trader.FirstName)!</h1>
+    <h3>Welcome to your Dashboard</h3>
+    <button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning" style="float:right">Create A Listing</button>
+    <button type="button" value="Browse" onclick="location.href='@Url.Action("Browse", "Traders")'" class="btn btn-outline-warning" style="float:right">Browse Listing</button>
 
-<h3>Welcome to your Dashboard</h3>
-<div>
-    <img src="~/img/@Model.Trader.ProfilePicture" style="width:100px; height:auto" />
+<br />
+<br />
+<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+    <div class="card-header" style="text-align:center">@Html.DisplayFor(model => model.Trader.FirstName)</div>
+    <div class="card-body">
+        <img src="~/img/@Model.Trader.ProfilePicture" style="width:250px; height:auto; align-items:center" />
+        <h4 class="card-title">Star rating placeholder</h4>
+    </div>
 </div>
-<button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning">Create A Listing</button>
-<br />
-<button type="button" value="Browse" onclick="location.href='@Url.Action("Browse", "Traders")'" class="btn btn-outline-warning">Browse Listing</button>
-<br />
-<div class="row" style="padding: 20px">
-    <div class="col-md-6">
-        <h1>My Active Listings</h1>
-        <table class="table table-active">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.MyListings[0].ListingName)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyListings[0].Category)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyListings[0].Price)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyListings[0].InReturn)</th>
-                    <th>Listing Options:</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var listing in Model.MyListings)
-                {
-                    if (!listing.IsArchived)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(listingItem => listing.ListingName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(listingItem => listing.Category)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(listingItem => listing.Price)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(listingItem => listing.InReturn)
-                            </td>
-                            <td>
 
-                                <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
-                                <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
-                                <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
-                            </td>
-                        </tr>
+    <br />
+    <div class="row" style="padding: 20px">
+        <div class="col-md-6">
+            <h1>My Active Listings</h1>
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.MyListings[0].ListingName)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyListings[0].Category)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyListings[0].Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyListings[0].InReturn)</th>
+                        <th>Listing Options:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var listing in Model.MyListings)
+                    {
+                        if (!listing.IsArchived)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(listingItem => listing.ListingName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(listingItem => listing.Category)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(listingItem => listing.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(listingItem => listing.InReturn)
+                                </td>
+                                <td>
+
+                                    <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
+                                    <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
+                                    <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
+                                </td>
+                            </tr>
+                        }
+
                     }
 
-                }
-
-        </table>
-    </div>
-    <div class="col-md-6" style="text-align:center;">
-        <h1>My Trade History</h1>
-        <table class="table table-active">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.MyPurchases[0].ListingName)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyPurchases[0].Category)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyPurchases[0].Price)</th>
-                    <th>@Html.DisplayNameFor(model => model.MyPurchases[0].InReturn)</th>
-                    <th>Details:</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.MyPurchases.Count == 0)
-                {
-                <tr class="table-danger">
-                    <th scope="rowgroup" colspan="6">No trades yet! :(</th>
-                </tr>
-                }
-                else
-                {
-                    foreach (var listing in Model.MyPurchases)
+            </table>
+        </div>
+        <div class="col-md-6" style="text-align:center;">
+            <h1>My Trade History</h1>
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.MyPurchases[0].ListingName)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyPurchases[0].Category)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyPurchases[0].Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.MyPurchases[0].InReturn)</th>
+                        <th>Details:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.MyPurchases.Count == 0)
                     {
+                        <tr class="table-danger">
+                            <th scope="rowgroup" colspan="6">No trades yet! :(</th>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var listing in Model.MyPurchases)
+                        {
                             <tr>
                                 <td>
                                     @Html.DisplayFor(listingItem => listing.ListingName)
@@ -100,68 +106,68 @@
                                 </td>
                             </tr>
                         }
-                }
-            </tbody>
-            <tbody class="table table-success" id="movieTableBody">
-            </tbody>
-        </table>
+                    }
+                </tbody>
+                <tbody class="table table-success" id="movieTableBody">
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.StreetName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trader.ZipCode)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(model => model.Trader.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.StreetName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.City)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.State)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trader.ZipCode)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@Model.Trader.Id">Edit my Profile</a> |
-                <a asp-action="Delete" asp-route-id="@Model.Trader.Id">Delete my Profile</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.StreetName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Trader.ZipCode)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Trader.ZipCode)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Model.Trader.Id">Edit my Profile</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.Trader.Id">Delete my Profile</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>

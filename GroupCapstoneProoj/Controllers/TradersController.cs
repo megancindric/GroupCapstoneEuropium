@@ -15,6 +15,8 @@
     using Microsoft.VisualBasic;
     using Stripe;
     using Stripe.Radar;
+    using GoogleMaps.LocationServices;
+
 
     public class TradersController : Controller
     {
@@ -303,6 +305,7 @@
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             listing.IdentityUserId = userId;
+            listing = GeocodeListing(listing);
             _context.Add(listing);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -332,6 +335,7 @@
                 listingToUpdate.ListingDescription = listing.ListingDescription;
                 listingToUpdate.InReturn = listing.InReturn;
                 listingToUpdate.ZipCode = listing.ZipCode;
+                listing = GeocodeListing(listing);
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
@@ -440,6 +444,22 @@
             var status = charge.Status;
 
             return status;
+
+        }
+
+        public Listing GeocodeListing(Listing listing)
+        {
+            AddressData address = new AddressData
+            {
+
+                Zip = listing.ZipCode
+            };
+            var geocodeRequest = new GoogleLocationService("AIzaSyAItJAdyunI8yeyDG6JrIhREocXwsgYN9k");
+            var latlong = geocodeRequest.GetLatLongFromAddress(address);
+
+            listing.Latitude = latlong.Latitude;
+            listing.Longitude = latlong.Longitude;
+            return listing;
 
         }
     }

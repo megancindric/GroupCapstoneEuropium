@@ -86,9 +86,13 @@
 
         </div>
     </div>
-  
-</div>
 
+</div>
+<input id="pac-input"
+       class="controls, col-form-label"
+       type="text"
+       placeholder="Search For Meetup Location" />
+<div id="map"></div>
 <div class="card border-success mb-3" style="max-width: 20rem;">
     <h3 style="text-align : center">Let's Trade!</h3>
     <div class="row">
@@ -103,14 +107,14 @@
 
     <div class="row">
         <div class="col-12" style="text-align:center">
-            <input type="button" class="btn btn-outline-warning btn-sm" id="sendButton" value="Send Message" />
+            <input type="button"class="btn btn-outline-warning btn-sm" id="sendButton" onclick="document.getElementById('messageInput').value = ''"value="Send Message" />
         </div>
     </div>
     <div class="card-body">
         <ul id="messagesList"></ul>
     </div>
+    <div class="col-md-6" id="map"></div>
 </div>
-
 
 <div class="col-md-6">
     <form asp-action="MakePayment" method="post" asp-route-id="@Model.Id">
@@ -124,5 +128,73 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-sDEHg4S5V1rYbnFEtFhekTHAxeHSgcI&callback=initAutocomplete&libraries=places&v=weekly"
+        defer></script>
+<script>
+    function initAutocomplete() {
+        var listingLocation = { lat: @Model.Latitude, lng: @Model.Longitude };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: listingLocation,
+            zoom: 13,
+            mapTypeId: "roadmap"
+        });
+
+        const input = document.getElementById("pac-input");
+        const searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // Bias the SearchBox results towards current map's viewport.
+        map.addListener("bounds_changed", () => {
+            searchBox.setBounds(map.getBounds());
+        });
+        let markers = []; // Listen for the event fired when the user selects a prediction and retrieve
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+            if (places.length == 0) {
+                return;
+            } // Clear out the old markers.
+
+            markers.forEach(marker => {
+                marker.setMap(null);
+            });
+            markers = []; // For each place, get the icon, name and location.
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach(place => {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+
+                const icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                }; // Create a marker for each place.
+
+                markers.push(
+                    new google.maps.Marker({
+                        map,
+                        icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    })
+                );
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+        });
+    }
+</script>

@@ -5,7 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Security.Claims;
-    using System.Text;
     using CloudinaryDotNet.Actions;
     using GroupCapstoneProoj.Data;
     using GroupCapstoneProoj.Models;
@@ -16,6 +15,8 @@
     using Microsoft.VisualBasic;
     using Stripe;
     using Stripe.Radar;
+    using GoogleMaps.LocationServices;
+
 
     public class TradersController : Controller
     {
@@ -83,9 +84,9 @@
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             viewModel.Listings = new List<Listing>();
-            if (viewModel.SelectedCategory == "All")
+            if(viewModel.SelectedCategory == "All")
             {
-                var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+               var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
                 foreach (Listing listing in currentListings)
                 {
                     viewModel.Listings.Add(listing);
@@ -304,6 +305,7 @@
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             listing.IdentityUserId = userId;
+            listing = GeocodeListing(listing);
             _context.Add(listing);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -333,6 +335,7 @@
                 listingToUpdate.ListingDescription = listing.ListingDescription;
                 listingToUpdate.InReturn = listing.InReturn;
                 listingToUpdate.ZipCode = listing.ZipCode;
+                listing = GeocodeListing(listing);
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
@@ -393,7 +396,7 @@
             }
         }
 
-        public ActionResult MakePayment(int? id)
+        public string MakePayment(int?id)
         {
 
 
@@ -440,52 +443,24 @@
 
             var status = charge.Status;
 
-            if (status == "succeeded")
+            return status;
+
+        }
+
+        public Listing GeocodeListing(Listing listing)
+        {
+            AddressData address = new AddressData
             {
-                return RedirectToAction("CompleteTransaction", new { id = id });
-            }
-            else
-            {
 
-                return RedirectToAction("FailedTransaction");
-            }
+                Zip = listing.ZipCode
+            };
+            var geocodeRequest = new GoogleLocationService("AIzaSyAItJAdyunI8yeyDG6JrIhREocXwsgYN9k");
+            var latlong = geocodeRequest.GetLatLongFromAddress(address);
 
+            listing.Latitude = latlong.Latitude;
+            listing.Longitude = latlong.Longitude;
+            return listing;
 
         }
-
-        public ActionResult CompleteTransaction(int id)
-        {
-            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
-            return View(listing);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CompleteTransaction(int id, string starValue)
-        {
-            // var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
-            var seller = _context.Traders.Where(t => t.IdentityUserId == listing.IdentityUserId).FirstOrDefault();
-            listing.SellerRating = Int32.Parse(starValue);
-            seller.Rating = Int32.Parse(starValue);
-            _context.Listings.Update(listing);
-            _context.Traders.Update(seller);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-        //public int UpdateRatings(int rating)
-        //{
-
-        //}
-
-
-
-        public ActionResult FailedTransaction()
-        {
-            return View();
-        }
-
-
     }
 }

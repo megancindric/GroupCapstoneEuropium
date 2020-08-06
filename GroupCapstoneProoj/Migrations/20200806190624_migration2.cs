@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupCapstoneProoj.Migrations
 {
-    public partial class initial : Migration
+    public partial class migration2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,7 +225,8 @@ namespace GroupCapstoneProoj.Migrations
                     ZipCode = table.Column<string>(maxLength: 5, nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
-                    ProfilePicture = table.Column<string>(nullable: true)
+                    ProfilePicture = table.Column<string>(nullable: true),
+                    Rating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,12 +242,12 @@ namespace GroupCapstoneProoj.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a4bcb740-0689-48d0-b8e1-84453b1f9434", "b05d1d16-4a59-4130-893c-c12fb849b101", "Admin", "ADMIN" });
+                values: new object[] { "9b6818b4-1a08-4167-80c7-78b229638275", "2da29c28-ca06-4c40-bfe7-373265f42a5c", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e3039995-25cb-4fd5-8765-c0b3adeb6cdd", "e5e90a7d-0c4f-4c96-bf3b-3ad9ec089593", "Trader", "TRADER" });
+                values: new object[] { "185ebf89-3c3a-496a-9979-dfdd116a31fa", "d1e401d5-bc3c-46a4-acd0-575ef73b23f1", "Trader", "TRADER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

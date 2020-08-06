@@ -1,0 +1,11 @@
+﻿@model GroupCapstoneProoj.Models.AdminIndexViewModel
+
+@{
+    ViewData["Title"] = "FailedTransaction";
+}
+
+<h1>FailedTransaction</h1>
+
+<p>Payment is not successful!</p>
+
+<a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@Model.Listings[0].Id">View Listing</a> |

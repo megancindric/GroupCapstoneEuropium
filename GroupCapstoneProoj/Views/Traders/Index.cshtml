@@ -13,18 +13,14 @@
 </style>
 
 
-<h1>Hello, Trader @Html.DisplayFor(model => model.Trader.FirstName)!</h1>
-<h3>Welcome to your Dashboard</h3>
-<button type="button" value="Create" onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-outline-warning" style="float:right">Create A Listing</button>
-<button type="button" value="Browse" onclick="location.href='@Url.Action("Browse", "Traders")'" class="btn btn-outline-warning" style="float:right">Browse Listing</button>
-
+<h1>Welcome to your dashboard, Trader @Html.DisplayFor(model => model.Trader.FirstName)!</h1>
 <br />
 <br />
 <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-    <div class="card-header" style="text-align:center">@Html.DisplayFor(model => model.Trader.FirstName)</div>
+    <div class="card-header" style="text-align:center">My Profile:</div>
     <div class="card-body">
         <img src="~/img/@Model.Trader.ProfilePicture" style="width:250px; height:auto; align-items:center" />
-        <h4 class="card-title">Seller Rating:</h4>
+        <h4 class="card-title"style="align-content:center">Seller Rating:</h4>
         <div>
             @for (int i = 0; i < @Model.Trader.Rating; i++)
             {
@@ -40,9 +36,11 @@
 </div>
 
 <br />
-<div class="row" style="padding: 20px">
+<div class="row" style="text-align: center">
     <div class="col-md-6">
-        <h1>My Active Listings</h1>
+        <h1>My Current Listings</h1>
+        <button type="button" value="Create"onclick="location.href='@Url.Action("CreateListing", "Traders")'" class="btn btn-warning btn-lg btn-block">Create a Listing</button>        
+        <br />
         <table class="table table-active">
             <thead>
                 <tr>
@@ -59,7 +57,7 @@
                 @if (Model.MyListings.Count == 0)
                 {
                     <tr class="table-danger">
-                        <th scope="rowgroup" colspan="6">No active listings to display! :(</th>
+                        <th scope="rowgroup" colspan="6">No current listings to display! :(</th>
                     </tr>
                 }
                 else
@@ -83,25 +81,25 @@
                                 @Html.DisplayFor(listingItem => listing.ListingStatus)
                             </td>
                             <td>
-                        @if(listing.ListingStatus == "InProgress")
-                        {
-                            <a class="badge badge-warning" asp-action="RateBuyer" asp-route-id="@listing.Id">Rate Buyer</a>
-                        }
-                        else
-                        {
-                              <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a>
-                                <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a>
-                                <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
-                        }
-                              
+                                @if (listing.ListingStatus == "InProgress")
+                                {
+                                    <a class="badge badge-warning" asp-action="RateBuyer" asp-route-id="@listing.Id">Rate Buyer</a>
+                                }
+                                else
+                                {
+                                    <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a>
+                                    <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a>
+                                    <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete</a>
+                                }
+
                             </td>
                         </tr>
                     }
                 }
-</table>
+        </table>
     </div>
     <div class="col-md-6" style="text-align:center;">
-        <h1>My Trade History</h1>
+        <h1>Trade History</h1>
         <table class="table table-active">
             <thead>
                 <tr>
@@ -142,8 +140,6 @@
                         </tr>
                     }
                 }
-            </tbody>
-            <tbody class="table table-success" id="movieTableBody">
             </tbody>
         </table>
     </div>

@@ -41,7 +41,7 @@
                     @Html.DisplayNameFor(model => model.Listings[0].ZipCode)
                 </th>
                 <th>
-                    Customer Options:
+                    View Listing:
                 </th>
                 <th></th>
             </tr>
@@ -66,9 +66,7 @@
                     @Html.DisplayFor(modelItem => item.ZipCode)
                 </td>
                 <td>
-                    <a asp-action="StartTrading" asp-route-id="@item.Id">Let's Trade!</a> |
-                    <a asp-action="ListingDetails" asp-route-id="@item.Id">View Listing Details</a> |
-                    <a asp-action="DeleteCustomer" asp-route-id="@item.Id">Remove Listing [TESTING]</a>
+                    <a class="badge badge-info"asp-action="ListingDetails" asp-route-id="@item.Id">View Listing</a>
                 </td>
             </tr>
 

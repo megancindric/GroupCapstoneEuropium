@@ -49,21 +49,25 @@
             </div>
 
         </div>
-        <div class="col-md-3">
-            <h1>@Html.DisplayFor(Model => Model.CurrentListing.ListingName)</h1>
+        <div class="col-md-6">
             <table class="table table-active">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.ListingName)</th>
                         <th>@Html.DisplayNameFor(model => model.CurrentListing.Category)</th>
-                        <th>@Html.DisplayNameFor(model => model.CurrentListing.InReturn)</th>
+                        <th>Looking for:</th>
                         <th>@Html.DisplayNameFor(model => model.CurrentListing.Price)</th>
                         <th>@Html.DisplayNameFor(model => model.CurrentListing.ListingDescription)</th>
                         <th>@Html.DisplayNameFor(model => model.CurrentListing.ZipCode)</th>
-                        <th>Seller Information:</th>
+                        <th>Sold By:</th>
+                        <th>@Html.DisplayNameFor(model => model.CurrentSeller.Rating)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.ListingName)
+                        </td>
                         <td>
                             @Html.DisplayFor(model => model.CurrentListing.Category)
                         </td>
@@ -79,70 +83,77 @@
                         <td>
                             @Html.DisplayFor(model => model.CurrentListing.ZipCode)
                         </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentSeller.FirstName)
+                        </td>
+                        <td>
+                            <div style="display:inline-flex">
+                                @for (int i = 0; i < @Model.CurrentSeller.Rating; i++)
+                                {
+                                    <span class="fa fa-star checked fa-2x"></span>
+
+                                }
+                                @for (int i = 0; i < 5 - @Model.CurrentSeller.Rating; i++)
+                                {
+                                    <span class="fa fa-star fa-2x"></span>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="4">
+                            <form asp-action="MakePayment" method="post" asp-route-id="@Model.CurrentListing.Id">
+                                <button class="btn btn-success btn-lg" name="Puchase">I'm Ready to Buy!</button>
+                            </form>
+                        </td>
+                        <td align="center" colspan="4">
+                            <button type="button"  class="btn btn-success btn-lg"value="CompleteTransaction" onclick="location.href='@Url.Action("CompleteTransaction", "Traders", new { id = Model.CurrentListing.Id})'">I'm Ready to Trade!</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" ; colspan="8">
+                            <div class="card border-success mb-auto">
+                                <h3 style="text-align : center">Chat with the Seller</h3>
+                                <div class="row">
+                                    <div class="col-4" style="text-align:center">Username:</div>
+                                    <div class="col-4" id="currentUserName"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4" style="text-align:center">Message:</div>
+                                    <div class="col-4"><input type="text" id="messageInput" /></div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="button" class="btn btn-outline-success btn-sm" id="sendButton" value="Send Message" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="card-body">
+                                        <ul style="text-align:left" id="messagesList"></ul>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </td>
                     </tr>
             </table>
 
         </div>
-        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-            <div class="card-header" style="text-align:center">@Html.DisplayFor(model => model.CurrentSeller.FirstName)</div>
-            <div class="card-body">
-                <img src="~/img/@Model.CurrentSeller.ProfilePicture" style="width:250px; height:auto; align-items:center" />
-                <h4 class="card-title">Seller Rating:</h4>
-                <div>
-                    @for (int i = 0; i < @Model.CurrentSeller.Rating; i++)
-                    {
-                        <span class="fa fa-star checked fa-2x"></span>
+    </div>
+    <br />
+    <br />
+    <div class="row" style="align-content:center">
+        <input id="pac-input"
+               class="controls, col-form-label"
+               type="text"
+               placeholder="Search For Meetup Location" />
+        <div id="map"></div>
+    </div>
+    <br />
+    <br />
 
-                    }
-                    @for (int i = 0; i < 5 - @Model.CurrentSeller.Rating; i++)
-                    {
-                        <span class="fa fa-star fa-2x"></span>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<input id="pac-input"
-       class="controls, col-form-label"
-       type="text"
-       placeholder="Search For Meetup Location" />
-<div id="map"></div>
-<div class="card border-success mb-3" style="max-width: 20rem;">
-    <h3 style="text-align : center">Let's Trade!</h3>
-    <div class="row">
-        <div class="col-4" style="text-align:center">Username:</div>
-        <div class="col-4" id="currentUserName"></div>
-    </div>
-    <div class="row">
-        <div class="col-4" style="text-align:center">Message:</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col-12" style="text-align:center">
-            <input type="button" class="btn btn-outline-warning btn-sm" id="sendButton" value="Send Message" />
-        </div>
-    </div>
-    <div class="card-body">
-        <ul id="messagesList"></ul>
-    </div>
-    <div class="col-md-6" id="map"></div>
-</div>
-
-<div class="col-md-6">
-    <form asp-action="MakePayment" method="post" asp-route-id="@Model.CurrentListing.Id">
-        <button class="btn btn-outline-success" name="Puchase">Purchase</button>
-    </form>
-    <button type="button" value="CompleteTransaction" onclick="location.href='@Url.Action("CompleteTransaction", "Traders", new { id = Model.CurrentListing.Id})'" class="btn btn-outline-success">Trade</button>
-</div>
-<br />
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CurrentListing.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

@@ -495,6 +495,7 @@
             var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
             var seller = _context.Traders.Where(t => t.IdentityUserId == listing.IdentityUserId).FirstOrDefault();
             listing.SellerRating = Int32.Parse(starValue);
+            listing.ListingStatus = "InProgress";
             seller.Rating = Int32.Parse(starValue);
             _context.Listings.Update(listing);
             _context.Traders.Update(seller);

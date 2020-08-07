@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Create your TRADR acount and get trading!</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -27,9 +27,8 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class ="form-group">
-                <label asp-for ="Input.Role"></label>
-                <select asp-for ="Input.Role" class="form-control" asp-items="@Model.Roles"></select>
+            <div class ="form-group" >
+                <input asp-for ="Input.Role" class="form-control" value="Trader" type="hidden"/>
                 <span asp-validation-for ="Input.Role" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Register</button>

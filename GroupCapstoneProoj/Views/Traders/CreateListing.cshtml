@@ -10,7 +10,7 @@
             new SelectListItem {Text = "Services", Value = "Services"},
          }, "Value", "Text");
 }
-<h4>Listing</h4>
+<h4>Create a Listing</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -36,7 +36,7 @@
                 <span asp-validation-for="InReturn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <p>Please enter price in $XX.XX format</p>
+                <p>Please enter price in XX.XX format</p>
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
@@ -55,10 +55,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -4,53 +4,17 @@
     ViewData["Title"] = "ListingDetails";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
 <h1>@Model.CurrentListing.ListingName</h1>
 
 <div class="container">
     <div class="row">
-        <div class=" col-md-6">
-            <h4>Listing Details</h4>
-            <hr />
-            <div class="row"></div>
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.ListingName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.ListingName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.ListingDescription)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.ListingDescription)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.Category)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.Category)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.InReturn)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.InReturn)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.Price)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.Price)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CurrentListing.ZipCode)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.CurrentListing.ZipCode)
-                </dd>
-            </dl>
-        </div>
         <div class="col-md-6">
             <div id="demo" class="carousel slide" width : 25% data-ride="carousel">
 
@@ -85,6 +49,59 @@
             </div>
 
         </div>
+        <div class="col-md-6">
+            <h1>@Html.DisplayFor(Model => Model.CurrentListing.ListingName)</h1>
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.Category)</th>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.InReturn)</th>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.ListingDescription)</th>
+                        <th>@Html.DisplayNameFor(model => model.CurrentListing.ZipCode)</th>
+                        <th>Seller Information:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.InReturn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.ListingDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CurrentListing.ZipCode)
+                        </td>
+                    </tr>
+            </table>
+
+        </div>
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center">@Html.DisplayFor(model => model.CurrentSeller.FirstName)</div>
+            <div class="card-body">
+                <img src="~/img/@Model.CurrentSeller.ProfilePicture" style="width:250px; height:auto; align-items:center" />
+                <h4 class="card-title">Seller Rating:</h4>
+                <div>
+                    @for (int i = 0; i < @Model.CurrentSeller.Rating; i++)
+                    {
+                        <span class="fa fa-star checked fa-2x"></span>
+
+                    }
+                    @for (int i = 0; i < 5 - @Model.CurrentSeller.Rating; i++)
+                    {
+                        <span class="fa fa-star fa-2x"></span>
+                    }
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -107,7 +124,7 @@
 
     <div class="row">
         <div class="col-12" style="text-align:center">
-            <input type="button"class="btn btn-outline-warning btn-sm" id="sendButton"value="Send Message" />
+            <input type="button" class="btn btn-outline-warning btn-sm" id="sendButton" value="Send Message" />
         </div>
     </div>
     <div class="card-body">

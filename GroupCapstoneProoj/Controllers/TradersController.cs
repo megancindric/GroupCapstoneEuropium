@@ -35,8 +35,8 @@
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.MyListings = new List<Listing>();
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
-            viewModel.MyListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
-            viewModel.MyPurchases = _context.Listings.Where(s => s.PurchasedBy == userId && s.IsArchived).ToList();
+            viewModel.MyListings = _context.Listings.Where(s => s.IdentityUserId == userId && s.ListingStatus != "Archived").ToList();
+            viewModel.MyPurchases = _context.Listings.Where(s => s.PurchasedBy == userId).ToList();
 
             return View(viewModel);
         }
@@ -46,8 +46,8 @@
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             viewModel.Trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
-            var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && !s.IsArchived).ToList();
-            var myPurchases = _context.Listings.Where(s => s.PurchasedBy == userId && s.IsArchived).ToList();
+            var myListings = _context.Listings.Where(s => s.IdentityUserId == userId && s.ListingStatus != "Archived").ToList();
+            var myPurchases = _context.Listings.Where(s => s.PurchasedBy == userId).ToList();
 
             foreach (Listing listing in myListings)
             {
@@ -69,7 +69,7 @@
             viewModel.Listings = new List<Listing>();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentTrader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
-            var localListing = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+            var localListing = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.ListingStatus != "Archived").ToList();
             foreach (Listing listing in localListing)
             {
                 viewModel.Listings.Add(listing);
@@ -86,7 +86,7 @@
             viewModel.Listings = new List<Listing>();
             if(viewModel.SelectedCategory == "All")
             {
-               var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode).ToList();
+               var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.ListingStatus != "Archived").ToList();
                 foreach (Listing listing in currentListings)
                 {
                     viewModel.Listings.Add(listing);
@@ -94,7 +94,7 @@
             }
             else
             {
-                var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.Category == viewModel.SelectedCategory).ToList();
+                var currentListings = _context.Listings.Where(s => s.ZipCode == currentTrader.ZipCode && s.Category == viewModel.SelectedCategory && s.ListingStatus != "Archived").ToList();
                 foreach (Listing listing in currentListings)
                 {
                     viewModel.Listings.Add(listing);
@@ -302,6 +302,7 @@
             listing.imageOne = imageList[0];
             listing.imageTwo = imageList[1];
             listing.imageThree = imageList[2];
+            listing.ListingStatus = "Active";
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             listing.IdentityUserId = userId;
@@ -452,6 +453,10 @@
 
             if (status == "succeeded")
             {
+                listing.ListingStatus = "InProgress";
+                listing.PurchasedBy = trader.IdentityUserId;
+                _context.Update(listing);
+                _context.SaveChanges();
                 return RedirectToAction("CompleteTransaction", new { id = id });
             }
             else
@@ -493,6 +498,27 @@
             seller.Rating = Int32.Parse(starValue);
             _context.Listings.Update(listing);
             _context.Traders.Update(seller);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RateBuyer(int id)
+        {
+            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            return View(listing);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RateBuyer(int id, string starValue)
+        {
+            var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            var buyer = _context.Traders.Where(t => t.IdentityUserId == listing.PurchasedBy).FirstOrDefault();
+            listing.BuyerRating = Int32.Parse(starValue);
+            listing.ListingStatus = "Archived";
+            buyer.Rating = Int32.Parse(starValue);
+            _context.Listings.Update(listing);
+            _context.Traders.Update(buyer);
             _context.SaveChanges();
 
             return RedirectToAction("Index");

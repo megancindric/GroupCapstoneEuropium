@@ -49,9 +49,9 @@ namespace GroupCapstoneProoj.Models
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        [Display(Name = "Is Archived")]
+        [Display(Name = "Listing Status")]
 
-        public bool IsArchived { get; set; }
+        public string ListingStatus { get; set; }
 
         public string imageOne { get; set; }
         public string imageTwo { get; set; }

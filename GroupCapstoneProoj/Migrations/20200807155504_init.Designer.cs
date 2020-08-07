@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCapstoneProoj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200806204159_init")]
+    [Migration("20200807155504_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,9 +72,6 @@ namespace GroupCapstoneProoj.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("bit");
-
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
@@ -84,6 +81,9 @@ namespace GroupCapstoneProoj.Migrations
 
                     b.Property<string>("ListingName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ListingStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Longitude")
@@ -209,15 +209,15 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3cd41a41-fa45-4a4f-8357-c011bb2cb810",
-                            ConcurrencyStamp = "e1483757-1f1b-4fea-8ea6-5cf54b4bb8c8",
+                            Id = "1bf2791d-1349-4c19-9df6-60a6d2f8f353",
+                            ConcurrencyStamp = "5d5df131-8592-4742-a528-43e91f9e2dd4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "eaabe710-645e-4ddc-87fb-bd2eebc2be4d",
-                            ConcurrencyStamp = "1f71272a-4795-4c99-9827-91e91c78f2c5",
+                            Id = "cad2b116-1a40-4890-8ee0-5db205de38b1",
+                            ConcurrencyStamp = "598a11cc-240b-4acc-9f3f-7616e0ce95b1",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });

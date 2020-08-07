@@ -189,7 +189,7 @@ namespace GroupCapstoneProoj.Migrations
                     ZipCode = table.Column<string>(maxLength: 5, nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
-                    IsArchived = table.Column<bool>(nullable: false),
+                    ListingStatus = table.Column<string>(nullable: true),
                     imageOne = table.Column<string>(nullable: true),
                     imageTwo = table.Column<string>(nullable: true),
                     imageThree = table.Column<string>(nullable: true),
@@ -242,12 +242,12 @@ namespace GroupCapstoneProoj.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3cd41a41-fa45-4a4f-8357-c011bb2cb810", "e1483757-1f1b-4fea-8ea6-5cf54b4bb8c8", "Admin", "ADMIN" });
+                values: new object[] { "1bf2791d-1349-4c19-9df6-60a6d2f8f353", "5d5df131-8592-4742-a528-43e91f9e2dd4", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "eaabe710-645e-4ddc-87fb-bd2eebc2be4d", "1f71272a-4795-4c99-9827-91e91c78f2c5", "Trader", "TRADER" });
+                values: new object[] { "cad2b116-1a40-4890-8ee0-5db205de38b1", "598a11cc-240b-4acc-9f3f-7616e0ce95b1", "Trader", "TRADER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

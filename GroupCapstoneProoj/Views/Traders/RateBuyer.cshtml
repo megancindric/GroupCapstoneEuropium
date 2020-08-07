@@ -1,27 +1,12 @@
 ﻿@model GroupCapstoneProoj.Models.Listing
 
 @{
-    ViewData["Title"] = "CompleteTransaction";
+    ViewData["Title"] = "RateYourPurchse";
 }
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-
-<h1>CompleteTransaction</h1>
-
-<p>Congratulations! Payment has been accepted.</p>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="row">
-
-    @*<div class="form-group">
-            <select name="starValue">
-                <option value="1">1 Star - Lowest</option>
-                <option value="2">2 Star</option>
-                <option value="3">3 Star</option>
-                <option value="4">4 Star</option>
-                <option value="5">5 Star - Highest</option>
-            </select>
-        </div>*@
-    <form asp-action="CompleteTransaction" method="post">
+    <form asp-action="RateBuyer" method="post">
         <div class="form-group">
             <input class="star star-5" value="5" id="star-5" type="radio" name="starValue" />
             <label class="star star-5" for="star-5"></label>
@@ -40,6 +25,3 @@
     </form>
 
 </div>
-
-
-

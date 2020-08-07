@@ -50,13 +50,21 @@
                     <th>@Html.DisplayNameFor(model => model.MyListings[0].Category)</th>
                     <th>@Html.DisplayNameFor(model => model.MyListings[0].Price)</th>
                     <th>@Html.DisplayNameFor(model => model.MyListings[0].InReturn)</th>
+                    <th>@Html.DisplayNameFor(model => model.MyListings[0].ListingStatus)</th>
                     <th>Listing Options:</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach (var listing in Model.MyListings)
+                @if (Model.MyListings.Count == 0)
                 {
-                    if (!listing.IsArchived)
+                    <tr class="table-danger">
+                        <th scope="rowgroup" colspan="6">No active listings to display! :(</th>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var listing in Model.MyListings)
                     {
                         <tr>
                             <td>
@@ -72,17 +80,25 @@
                                 @Html.DisplayFor(listingItem => listing.InReturn)
                             </td>
                             <td>
-
-                                <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a> |
-                                <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a> |
+                                @Html.DisplayFor(listingItem => listing.ListingStatus)
+                            </td>
+                            <td>
+                        @if(listing.ListingStatus == "InProgress")
+                        {
+                            <a class="badge badge-warning" asp-action="RateBuyer" asp-route-id="@listing.Id">Rate Buyer</a>
+                        }
+                        else
+                        {
+                              <a class="badge badge-success" asp-action="ListingDetails" asp-route-id="@listing.Id">View Listing</a>
+                                <a class="badge badge-warning" asp-action="EditListing" asp-route-id="@listing.Id">Edit</a>
                                 <a class="badge badge-danger" asp-action="DeleteListing" asp-route-id="@listing.Id">Delete [TESTING]</a>
+                        }
+                              
                             </td>
                         </tr>
                     }
-
                 }
-
-        </table>
+</table>
     </div>
     <div class="col-md-6" style="text-align:center;">
         <h1>My Trade History</h1>

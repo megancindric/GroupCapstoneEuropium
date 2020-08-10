@@ -101,19 +101,23 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="4">
-                            <form asp-action="MakePayment" method="post" asp-route-id="@Model.CurrentListing.Id">
-                                <button class="btn btn-success btn-lg" name="Puchase">I'm Ready to Buy!</button>
-                            </form>
-                        </td>
-                        <td align="center" colspan="4">
-                            <button type="button"  class="btn btn-success btn-lg"value="CompleteTransaction" onclick="location.href='@Url.Action("CompleteTransaction", "Traders", new { id = Model.CurrentListing.Id})'">I'm Ready to Trade!</button>
-                        </td>
+                        @if (Model.CurrentSeller.IdentityUserId != Model.CurrentBuyer.IdentityUserId)
+                        {
+                            <td align="center" colspan="4">
+                                <form asp-action="MakePayment" method="post" asp-route-id="@Model.CurrentListing.Id">
+                                    <button class="btn btn-success btn-lg" name="Puchase">I'm Ready to Buy!</button>
+                                </form>
+                            </td>
+                            <td align="center" colspan="4">
+                                <button type="button" class="btn btn-success btn-lg" value="CompleteTransaction" onclick="location.href='@Url.Action("CompleteTransaction", "Traders", new { id = Model.CurrentListing.Id})'">I'm Ready to Trade!</button>
+                            </td>
+                        }
+
                     </tr>
                     <tr>
                         <td align="center" ; colspan="8">
                             <div class="card border-success mb-auto">
-                                <h3 style="text-align : center">Chat with the Seller</h3>
+                                <h3 style="text-align : center">Buyer/Seller Chat:</h3>
                                 <div class="row">
                                     <div class="col-4" style="text-align:center">Username:</div>
                                     <div class="col-4" id="currentUserName"></div>

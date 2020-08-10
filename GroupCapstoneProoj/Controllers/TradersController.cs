@@ -363,7 +363,7 @@
 
             var listing = _context.Listings
                 .Include(c => c.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (listing == null)
             {
                 return NotFound();
@@ -474,7 +474,7 @@
 
                 Zip = listing.ZipCode
             };
-            var geocodeRequest = new GoogleLocationService("AIzaSyAItJAdyunI8yeyDG6JrIhREocXwsgYN9k");
+            var geocodeRequest = new GoogleLocationService("APIKEYHERE");
             var latlong = geocodeRequest.GetLatLongFromAddress(address);
 
             listing.Latitude = latlong.Latitude;
@@ -492,10 +492,13 @@
         [ValidateAntiForgeryToken]
         public IActionResult CompleteTransaction(int id, string starValue)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var listing = _context.Listings.Where(c => c.Id == id).SingleOrDefault();
+            var trader = _context.Traders.Where(s => s.IdentityUserId == userId).FirstOrDefault();
             var seller = _context.Traders.Where(t => t.IdentityUserId == listing.IdentityUserId).FirstOrDefault();
             listing.SellerRating = Int32.Parse(starValue);
             listing.ListingStatus = "InProgress";
+            listing.PurchasedBy = trader.IdentityUserId;
             seller.Rating = Int32.Parse(starValue);
             _context.Listings.Update(listing);
             _context.Traders.Update(seller);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupCapstoneProoj.Migrations
 {
-    public partial class init : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -242,12 +242,12 @@ namespace GroupCapstoneProoj.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1bf2791d-1349-4c19-9df6-60a6d2f8f353", "5d5df131-8592-4742-a528-43e91f9e2dd4", "Admin", "ADMIN" });
+                values: new object[] { "bb7f2fe4-49cf-4f43-92ec-7efc3c33cf26", "6a6f4282-40f9-4275-8e19-1fa405070a37", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cad2b116-1a40-4890-8ee0-5db205de38b1", "598a11cc-240b-4acc-9f3f-7616e0ce95b1", "Trader", "TRADER" });
+                values: new object[] { "ea630280-c5aa-471d-b551-bac304bd1a85", "4ccbd0c6-56d1-403b-91e0-2ac7df2f44c0", "Trader", "TRADER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupCapstoneProoj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200807155504_init")]
-    partial class init
+    [Migration("20200813173537_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,15 +209,15 @@ namespace GroupCapstoneProoj.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1bf2791d-1349-4c19-9df6-60a6d2f8f353",
-                            ConcurrencyStamp = "5d5df131-8592-4742-a528-43e91f9e2dd4",
+                            Id = "bb7f2fe4-49cf-4f43-92ec-7efc3c33cf26",
+                            ConcurrencyStamp = "6a6f4282-40f9-4275-8e19-1fa405070a37",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "cad2b116-1a40-4890-8ee0-5db205de38b1",
-                            ConcurrencyStamp = "598a11cc-240b-4acc-9f3f-7616e0ce95b1",
+                            Id = "ea630280-c5aa-471d-b551-bac304bd1a85",
+                            ConcurrencyStamp = "4ccbd0c6-56d1-403b-91e0-2ac7df2f44c0",
                             Name = "Trader",
                             NormalizedName = "TRADER"
                         });
